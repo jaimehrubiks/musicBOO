@@ -400,7 +400,7 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Mark \"keep original video\" to preserve");
+        jLabel5.setText("Select BEST or BESTVIDEO or (other video formats) for video downloading mode. ");
 
         confOriginalVideoFormat.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "best", "bestvideo", "bestaudio", "worst", "bestvideo+bestaudio", "aac", "m4a", "mp3", "mp4", "ogg", "wav", "webm" }));
 
@@ -811,13 +811,23 @@ public class BooGui extends javax.swing.JFrame {
 
     private void confVideoOnlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confVideoOnlyActionPerformed
         // TODO add your handling code here:
-        if(confVideoOnly.isSelected()) confVideoOnly.setText("Yes");
+        if(confVideoOnly.isSelected()) {
+            confVideoOnly.setText("Yes");
+            String test = (String)  confOriginalVideoFormat.getSelectedItem();
+            if( !test.equalsIgnoreCase("best") && !test.equalsIgnoreCase("bestvideo") )
+                confOriginalVideoFormat.setSelectedItem("best");
+        }
         else confVideoOnly.setText("No");
     }//GEN-LAST:event_confVideoOnlyActionPerformed
 
     private void confKeepOriginalVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confKeepOriginalVideoActionPerformed
         // TODO add your handling code here:
-        if(confKeepOriginalVideo.isSelected()) confKeepOriginalVideo.setText("Yes");
+        if(confKeepOriginalVideo.isSelected()) {
+            confKeepOriginalVideo.setText("Yes");
+            String test = (String)  confOriginalVideoFormat.getSelectedItem();
+            if( !test.equalsIgnoreCase("best") && !test.equalsIgnoreCase("bestvideo") )
+                confOriginalVideoFormat.setSelectedItem("best");
+        }
         else confKeepOriginalVideo.setText("No");
     }//GEN-LAST:event_confKeepOriginalVideoActionPerformed
 
