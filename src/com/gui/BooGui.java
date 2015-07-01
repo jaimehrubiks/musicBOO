@@ -104,6 +104,8 @@ public class BooGui extends javax.swing.JFrame {
           //DefaultCaret caret = (DefaultCaret) jTextArea1.getCaret();
           // caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
           jTextArea1.setCaretPosition(0);
+          
+          setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     /**
