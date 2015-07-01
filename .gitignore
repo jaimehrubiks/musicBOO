@@ -5,3 +5,6 @@
 /build/
 /config/
 /osxtools/
+/nbproject/
+.DS_Store
+log.txt
