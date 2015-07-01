@@ -64,6 +64,8 @@ public class VideoDownloader implements Runnable {
             command.add(new java.io.File("").getAbsolutePath()+"/tools/youtube-dl.exe");
         else if (platformtools.isMac())
             command.add( new java.io.File("").getAbsolutePath()+"/osxtools/youtube-dl");
+        else if(platformtools.isUnix())
+            command.add( new java.io.File("").getAbsolutePath()+"/linuxtools/youtube-dl");
         
         if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))) {
             //Video Format
@@ -139,6 +141,10 @@ public class VideoDownloader implements Runnable {
             if (platformtools.isMac()){
                 Map<String, String> env = builder.environment();
                 env.put("PATH", env.get("PATH") + ":" + new java.io.File("").getAbsolutePath() + "/osxtools/");
+            }
+            else if (platformtools.isUnix()){
+                Map<String, String> env = builder.environment();
+                env.put("PATH", env.get("PATH") + ":" + new java.io.File("").getAbsolutePath() + "/linuxtools/");
             }
 
             builder.directory( new File( UserSettings.configProps.getProperty("DownloadsFolder") ) );

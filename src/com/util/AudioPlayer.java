@@ -55,6 +55,8 @@ public class AudioPlayer{
                         command.add("./tools/mpv.com");
                     else if(platformtools.isMac())
                         command.add("./osxtools/mpv");
+                    else if(platformtools.isUnix())
+                        command.add("mpv");
                     command.add("-ytdl");
                     command.add(httpLink);
 
