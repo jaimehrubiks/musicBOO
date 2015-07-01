@@ -138,9 +138,7 @@ public class VideoDownloader implements Runnable {
             
             if (platformtools.isMac()){
                 Map<String, String> env = builder.environment();
-                System.out.println(env.get("PATH"));
                 env.put("PATH", env.get("PATH") + ":" + new java.io.File("").getAbsolutePath() + "/osxtools/");
-                System.out.println(env.get("PATH"));
             }
 
             builder.directory( new File( UserSettings.configProps.getProperty("DownloadsFolder") ) );

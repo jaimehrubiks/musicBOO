@@ -51,7 +51,10 @@ public class AudioPlayer{
                     ProcessBuilder pb = new ProcessBuilder();
 
                     List<String> command = new ArrayList<>();
-                    command.add("./tools/mpv.com");
+                    if(platformtools.isWindows())
+                        command.add("./tools/mpv.com");
+                    else if(platformtools.isMac())
+                        command.add("./osxtools/mpv");
                     command.add("-ytdl");
                     command.add(httpLink);
 
