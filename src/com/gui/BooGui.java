@@ -1085,18 +1085,16 @@ public class BooGui extends javax.swing.JFrame {
     }
     
     public void updateBar(){
-        //(( WebProgressBar) progressBar).setBgBottom(Color.BLACK);
-        //(( WebProgressBar) progressBar).setHighlightWhite(Color.PINK);
+                
+        progressBar.setValue(downloadsCount+1);
+        progressBar.setMaximum(downModel.getRowCount()+1);
         
-        //if(downloadsCount==0 && progressBar.getValue()==0){
-            //System.out.println("->"+progressBar.getValue());
-            //progressBar.setValue(50);
-            //progressBar.setMaximum(100);
-        //}else{
-            progressBar.setValue(downloadsCount+1);
-            progressBar.setMaximum(downModel.getRowCount()+1);
-        //}
-        //progressBar.setVisible(true);
+        if(progressBar.getValue()==progressBar.getMaximum())
+            (( WebProgressBar) progressBar).setProgressTopColor(Color.GREEN);
+        else
+            (( WebProgressBar) progressBar).setProgressTopColor(Color.CYAN);
+        
+
         
         
     }
