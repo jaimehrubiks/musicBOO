@@ -60,8 +60,11 @@ public class VideoDownloader implements Runnable {
         command = new ArrayList<>();
 
         //PATH TO YOUTUBE-DL
-        command.add( new java.io.File("").getAbsolutePath()+"/osxtools/youtube-dl");
-        //command.add("/usr/local/bin/youtube-dl");
+        if (platformtools.isWindows())
+            command.add(new java.io.File("").getAbsolutePath()+"/tools/youtube-dl.exe");
+        else if (platformtools.isMac())
+            command.add( new java.io.File("").getAbsolutePath()+"/osxtools/youtube-dl");
+        
         if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))) {
             //Video Format
             command.add("--format");
@@ -132,11 +135,13 @@ public class VideoDownloader implements Runnable {
 
         try {
             ProcessBuilder builder = new ProcessBuilder(command);
-
-            Map<String, String> env = builder.environment();
-            System.out.println(env.get("PATH"));
-            env.put("PATH", env.get("PATH")+":"+new java.io.File("").getAbsolutePath()+"/osxtools/");
-            System.out.println(env.get("PATH"));
+            
+            if (platformtools.isMac()){
+                Map<String, String> env = builder.environment();
+                System.out.println(env.get("PATH"));
+                env.put("PATH", env.get("PATH") + ":" + new java.io.File("").getAbsolutePath() + "/osxtools/");
+                System.out.println(env.get("PATH"));
+            }
 
             builder.directory( new File( UserSettings.configProps.getProperty("DownloadsFolder") ) );
             builder.redirectErrorStream(true);
