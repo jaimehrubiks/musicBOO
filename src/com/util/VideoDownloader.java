@@ -30,6 +30,8 @@ public class VideoDownloader implements Runnable {
     private static int totalThreads;
     private volatile static List<Boolean> okThreads;
     private static int okThread;
+    
+    private int audio_video_only = 0; // 0 Default , 1 Audio , 2 Video
 
     static {
         parallelThreads = Integer.parseInt(UserSettings.configProps.getProperty("ParallelDownloads"));
@@ -54,6 +56,15 @@ public class VideoDownloader implements Runnable {
         totalThreads++;
         okThreads.add(Boolean.FALSE);
     }
+    
+    public VideoDownloader(String id, BooGui guiRef, int downref,int auvidon) {
+        this.id = id;
+        this.guiRef = guiRef;
+        downRef = downref;
+        totalThreads++;
+        okThreads.add(Boolean.FALSE);
+        audio_video_only = auvidon;
+    }
 
     private void loadCommandParams() {
 
@@ -67,10 +78,15 @@ public class VideoDownloader implements Runnable {
         else if(platformtools.isUnix())
             command.add( new java.io.File("").getAbsolutePath()+"/linuxtools/youtube-dl");
         
-        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))) {
-            //Video Format
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))  && audio_video_only == 0 
+                                                                                        || audio_video_only == 2) {
+
             command.add("--format");
-            command.add(UserSettings.configProps.getProperty("VideoFormat"));
+            String format = UserSettings.configProps.getProperty("VideoFormat");
+            if( !format.equals("best") && !format.equals("bestvideo") && !format.equals("bestvideo+bestaudio") && !format.equals("mp4") )
+                command.add("best");
+            else
+                command.add(format);
             //Re encode video after download
             if (!UserSettings.configProps.getProperty("PostVideoConvert").equals("no")) {
                 command.add("--recode-video");
@@ -97,12 +113,12 @@ public class VideoDownloader implements Runnable {
         command.add(UserSettings.configProps.getProperty("AudioQuality"));
 
         //Keep Original video after obtaining audio
-        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("KeepVideo"))) {
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("KeepVideo")) && audio_video_only == 0) {
             command.add("-k");
         }
 
         //Re encode video after download
-        if (!UserSettings.configProps.getProperty("PostVideoConvert").equals("no")) {
+        if (!UserSettings.configProps.getProperty("PostVideoConvert").equals("no")  && audio_video_only == 0 ){
             command.add("--recode-video");
             command.add(UserSettings.configProps.getProperty("PostVideoConvert"));
             System.out.println(UserSettings.configProps.getProperty("PostVideoConvert"));

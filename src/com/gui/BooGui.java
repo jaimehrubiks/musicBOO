@@ -14,8 +14,11 @@ import com.util.Functions;
 import com.util.VideoDownloader;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,11 +32,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.text.DefaultCaret;
 
 /**
  *
@@ -108,6 +111,30 @@ public class BooGui extends javax.swing.JFrame {
           jTextArea1.setCaretPosition(0);
           
           setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+          
+          videoTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                // Left mouse click
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    // Do something
+                } // Right mouse click
+                else if (SwingUtilities.isRightMouseButton(e) )
+		 {
+                    // get the coordinates of the mouse click
+                    Point p = e.getPoint();
+
+                    // get the row index that contains that coordinate
+                    int rowNumber = videoTable.rowAtPoint(p);
+
+                    // Get the ListSelectionModel of the JTable
+                    ListSelectionModel model = videoTable.getSelectionModel();
+
+			// set the selected interval of rows. Using the "rowNumber"
+                    // variable for the beginning and end selects only that one row.
+                    model.setSelectionInterval(rowNumber, rowNumber);
+                }
+            }
+        });
     }
 
     /**
@@ -119,6 +146,9 @@ public class BooGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        rightClickMenu = new javax.swing.JPopupMenu();
+        rightClickAudio = new javax.swing.JMenuItem();
+        rightClickVideo = new javax.swing.JMenuItem();
         paneLog = new javax.swing.JPanel();
         scrollLog = new javax.swing.JScrollPane();
         outputLogger = new javax.swing.JTextArea();
@@ -186,6 +216,22 @@ public class BooGui extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
 
+        rightClickAudio.setText("Download Audio");
+        rightClickAudio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightClickAudioActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(rightClickAudio);
+
+        rightClickVideo.setText("Download Video");
+        rightClickVideo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightClickVideoActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(rightClickVideo);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -245,8 +291,14 @@ public class BooGui extends javax.swing.JFrame {
 
         videoTable.setModel(model);
         videoTable.setRowHeight(50);
+        videoTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         videoTable.setShowHorizontalLines(false);
         videoTable.setShowVerticalLines(false);
+        videoTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                videoTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(videoTable);
 
         javax.swing.GroupLayout searchTabLayout = new javax.swing.GroupLayout(searchTab);
@@ -856,6 +908,37 @@ public class BooGui extends javax.swing.JFrame {
         Functions.loadLink("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=LHEC57GMVE5QA&lc=ES&item_name=Jaime%20Hidalgo%20Proyects&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted");
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void videoTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_videoTableMouseClicked
+        // TODO add your handling code here:
+        if ( evt.getButton() == 3 )
+            rightClickMenu.show(videoTable, evt.getX(), evt.getY());
+    }//GEN-LAST:event_videoTableMouseClicked
+
+    private void rightClickAudioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightClickAudioActionPerformed
+        // TODO add your handling code here:
+        Thread t = new Thread(new VideoDownloader(boo.currentVideos.get(videoTable.getSelectedRow()).getID(), BooGui.this, downModel.getRowCount() , 1));
+        t.start();
+
+        //model.setValueAt( "", modelRow, 6 );
+        model.setValueAt(downloadOkImage, videoTable.getSelectedRow(), 6);
+        Object[] data = {model.getValueAt(videoTable.getSelectedRow(), 0), model.getValueAt(videoTable.getSelectedRow(), 1), model.getValueAt(videoTable.getSelectedRow(), 2), "0%"};
+        downModel.addRow(data);
+        updateBar();
+    }//GEN-LAST:event_rightClickAudioActionPerformed
+
+    private void rightClickVideoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightClickVideoActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        Thread t = new Thread(new VideoDownloader(boo.currentVideos.get(videoTable.getSelectedRow()).getID(), BooGui.this, downModel.getRowCount() , 2));
+        t.start();
+
+        //model.setValueAt( "", modelRow, 6 );
+        model.setValueAt(downloadOkImage, videoTable.getSelectedRow(), 6);
+        Object[] data = {model.getValueAt(videoTable.getSelectedRow(), 0), model.getValueAt(videoTable.getSelectedRow(), 1), model.getValueAt(videoTable.getSelectedRow(), 2), "0%"};
+        downModel.addRow(data);
+        updateBar();
+    }//GEN-LAST:event_rightClickVideoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1247,6 +1330,9 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JTextArea outputLogger1;
     private javax.swing.JPanel paneLog;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JMenuItem rightClickAudio;
+    private javax.swing.JPopupMenu rightClickMenu;
+    private javax.swing.JMenuItem rightClickVideo;
     private javax.swing.JScrollPane scrollLog;
     private javax.swing.JScrollPane scrollLog1;
     private javax.swing.JButton searchButton;
