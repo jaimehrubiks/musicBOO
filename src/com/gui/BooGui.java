@@ -11,6 +11,7 @@ import com.alee.laf.progressbar.WebProgressBar;
 import com.io.UserSettings;
 import com.util.AudioPlayer;
 import com.util.Functions;
+import com.util.PlayListDownloader;
 import com.util.VideoDownloader;
 import java.awt.Color;
 import java.awt.Desktop;
@@ -77,7 +78,7 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
         //
-        this.getRootPane().setDefaultButton(searchButton);
+        //this.getRootPane().setDefaultButton(searchButton);
        
         
         //progressBar.set
@@ -99,6 +100,13 @@ public class BooGui extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchButton.doClick();
+            }
+        });
+        
+        playListField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startPlayList.doClick();
             }
         });
         
@@ -168,6 +176,12 @@ public class BooGui extends javax.swing.JFrame {
         urlParseButton = new javax.swing.JButton();
         urlParserBar = new WebProgressBar();
         jLabel14 = new javax.swing.JLabel();
+        playlistTab = new javax.swing.JPanel();
+        jLabel18 = new javax.swing.JLabel();
+        startPlayList = new javax.swing.JButton();
+        playListField = new javax.swing.JTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
         downTab = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         downloadsTable = new javax.swing.JTable();
@@ -281,6 +295,11 @@ public class BooGui extends javax.swing.JFrame {
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(0, 115));
 
         searchField.setText("Input Song Title");
+        searchField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchFieldKeyReleased(evt);
+            }
+        });
 
         searchButton.setText("Search");
         searchButton.addActionListener(new java.awt.event.ActionListener() {
@@ -381,6 +400,60 @@ public class BooGui extends javax.swing.JFrame {
         urlTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {urlParseButton, urlParserBar});
 
         jTabbedPane1.addTab("URL Parser", urlTab);
+
+        jLabel18.setText("Paste a youtube URL. It may be a Playlist, Channel or Video... musicBOO will attempt to download it using your user Settings.");
+
+        startPlayList.setText("Start Downloads");
+        startPlayList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startPlayListActionPerformed(evt);
+            }
+        });
+
+        playListField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                playListFieldKeyPressed(evt);
+            }
+        });
+
+        jTextArea2.setEditable(false);
+        jTextArea2.setColumns(20);
+        jTextArea2.setRows(5);
+        jTextArea2.setText("Some Examples:\n\nVideo\nhttps://www.youtube.com/watch?v=VIDEO_ID\n[You can see \"watch?v=ID\" as part of the URL]\n\nPlaylist\nhttps://www.youtube.com/playlist?list=PLAYLIST_ID\n[You can see \"?list=ID\" as part of the URL]\n\nChannel\nhttps://www.youtube.com/user/USER_NAME/videos\n[You can see \"/user/USERNAME/videos\" as part of the URL]");
+        jTextArea2.setFocusable(false);
+        jScrollPane5.setViewportView(jTextArea2);
+
+        javax.swing.GroupLayout playlistTabLayout = new javax.swing.GroupLayout(playlistTab);
+        playlistTab.setLayout(playlistTabLayout);
+        playlistTabLayout.setHorizontalGroup(
+            playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playlistTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(playListField)
+                    .addComponent(jScrollPane5)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(startPlayList)
+                .addContainerGap())
+        );
+        playlistTabLayout.setVerticalGroup(
+            playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playlistTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playListField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startPlayList))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        playlistTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playListField, startPlayList});
+
+        jTabbedPane1.addTab("Playlists...", playlistTab);
 
         downloadsTable.setModel(downModel);
         downloadsTable.setRowHeight(50);
@@ -939,6 +1012,23 @@ public class BooGui extends javax.swing.JFrame {
         updateBar();
     }//GEN-LAST:event_rightClickVideoActionPerformed
 
+    private void startPlayListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startPlayListActionPerformed
+        // TODO add your handling code here:
+        Thread t = new Thread(new PlayListDownloader(playListField.getText(), BooGui.this, downModel.getRowCount() ));
+        t.start();
+        Object[] data = {icon, playListField.getText(), "", "0%"};
+        downModel.addRow(data);
+        updateBar();
+    }//GEN-LAST:event_startPlayListActionPerformed
+
+    private void playListFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playListFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_playListFieldKeyPressed
+
+    private void searchFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchFieldKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldKeyReleased
+
     /**
      * @param args the command line arguments
      */
@@ -1301,6 +1391,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1314,6 +1405,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1324,11 +1416,14 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JToggleButton logButton;
     private javax.swing.JButton openFolderButton;
     private javax.swing.JTextArea outputLogger;
     private javax.swing.JTextArea outputLogger1;
     private javax.swing.JPanel paneLog;
+    private javax.swing.JTextField playListField;
+    private javax.swing.JPanel playlistTab;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem rightClickAudio;
     private javax.swing.JPopupMenu rightClickMenu;
@@ -1339,6 +1434,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JTextField searchField;
     private javax.swing.JPanel searchTab;
     private javax.swing.JScrollPane settingsTab;
+    private javax.swing.JButton startPlayList;
     private javax.swing.JButton urlParseButton;
     private javax.swing.JProgressBar urlParserBar;
     private javax.swing.JPanel urlTab;

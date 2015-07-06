@@ -24,24 +24,7 @@ import javax.swing.JTextArea;
  *
  * @author Jaime Hidalgo García
  */
-public class VideoDownloader implements Runnable {
-
-    private static final int parallelThreads;
-    private static int totalThreads;
-    private volatile static List<Boolean> okThreads;
-    private static int okThread;
-    
-    private int audio_video_only = 0; // 0 Default , 1 Audio , 2 Video
-
-    static {
-        parallelThreads = Integer.parseInt(UserSettings.configProps.getProperty("ParallelDownloads"));
-        totalThreads = 0;
-        okThreads = new ArrayList<>();
-        for (int i = 0; i < parallelThreads; i++) {
-            okThreads.add(Boolean.TRUE);
-        }
-        okThread = Integer.parseInt(UserSettings.configProps.getProperty("ParallelDownloads"));
-    }
+public class PlayListDownloader implements Runnable {
 
     private String id;
     private BooGui guiRef;
@@ -49,21 +32,10 @@ public class VideoDownloader implements Runnable {
 
     List<String> command;
 
-    public VideoDownloader(String id, BooGui guiRef, int downref) {
+    public PlayListDownloader(String id, BooGui guiRef, int downref) {
         this.id = id;
         this.guiRef = guiRef;
         downRef = downref;
-        totalThreads++;
-        okThreads.add(Boolean.FALSE);
-    }
-    
-    public VideoDownloader(String id, BooGui guiRef, int downref,int auvidon) {
-        this.id = id;
-        this.guiRef = guiRef;
-        downRef = downref;
-        totalThreads++;
-        okThreads.add(Boolean.FALSE);
-        audio_video_only = auvidon;
     }
 
     private void loadCommandParams() {
@@ -78,8 +50,9 @@ public class VideoDownloader implements Runnable {
         else if(platformtools.isUnix())
             command.add( new java.io.File("").getAbsolutePath()+"/linuxtools/youtube-dl");
         
-        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))  && audio_video_only == 0 
-                                                                                        || audio_video_only == 2) {
+        command.add("-i");
+        
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS")) )  {
 
             command.add("--format");
             String format = UserSettings.configProps.getProperty("VideoFormat");
@@ -114,12 +87,12 @@ public class VideoDownloader implements Runnable {
         command.add(UserSettings.configProps.getProperty("AudioQuality"));
 
         //Keep Original video after obtaining audio
-        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("KeepVideo")) && audio_video_only == 0) {
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("KeepVideo")) ) {
             command.add("-k");
         }
 
         //Re encode video after download
-        if (!UserSettings.configProps.getProperty("PostVideoConvert").equals("no")  && audio_video_only == 0 ){
+        if (!UserSettings.configProps.getProperty("PostVideoConvert").equals("no")  ){
             command.add("--recode-video");
             command.add(UserSettings.configProps.getProperty("PostVideoConvert"));
             System.out.println(UserSettings.configProps.getProperty("PostVideoConvert"));
@@ -134,12 +107,6 @@ public class VideoDownloader implements Runnable {
         command.add(id);
     }
 
-    private static synchronized void downloadCompleted() {
-
-        okThreads.set(okThread, Boolean.TRUE);
-        okThread++;
-
-    }
 
     @Override
     public void run() {
@@ -148,9 +115,6 @@ public class VideoDownloader implements Runnable {
         JTextArea logger = guiRef.getLogOutput();
         guiRef.setDownStatus(downRef, 0);
         guiRef.setDownStatus(downRef, "Waiting");
-        while (!okThreads.get(downRef)) {
-            waitfor(1000);
-        }
 
         try {
             ProcessBuilder builder = new ProcessBuilder(command);
@@ -174,9 +138,13 @@ public class VideoDownloader implements Runnable {
 
             while ((line = r.readLine()) != null) {
                 lines = line.replaceAll("\\s+", " ").replaceAll("%", "").split(" ");
-                if (lines[0].equalsIgnoreCase("[download]")) {
+                if (lines[0].equalsIgnoreCase("[download]") && lines[1].equalsIgnoreCase("downloading")
+                        && lines[2].equalsIgnoreCase("video") && lines[4].equalsIgnoreCase("of") ) {
                     try {
-                        guiRef.setDownStatus(downRef, (int) Float.parseFloat(lines[1]));
+                        float max = Float.parseFloat(lines[5]) +1;
+                        float val = Float.parseFloat(lines[3]) ;
+                        System.out.println( (val/max) );
+                        guiRef.setDownStatus(downRef, (int) (val/max*100));
                     } catch (NumberFormatException e) {
                     }
                 } else if (lines[0].equalsIgnoreCase("[ffmpeg]")) {
@@ -194,16 +162,15 @@ public class VideoDownloader implements Runnable {
             guiRef.setBarComplete();
 
         } catch (IOException ex) {
-            Logger.getLogger(VideoDownloader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayListDownloader.class.getName()).log(Level.SEVERE, null, ex);
             ErrorLogger.toFile("ProcessError", ex.toString());
         }
-        downloadCompleted();
 
     }
 
     public static void main(String[] args) {
 
-        VideoDownloader down = new VideoDownloader("PQtRXqBQETA", new BooGui(), 5);
+        PlayListDownloader down = new PlayListDownloader("PQtRXqBQETA", new BooGui(), 5);
         down.run();
         System.out.println("end1");
 
@@ -213,7 +180,7 @@ public class VideoDownloader implements Runnable {
         try {
             Thread.sleep(miliSeconds);
         } catch (InterruptedException ex) {
-            Logger.getLogger(VideoDownloader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlayListDownloader.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

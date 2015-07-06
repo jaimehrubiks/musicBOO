@@ -71,12 +71,15 @@ public class Functions {
     public static String getID(String url){
         int index = url.indexOf("?v=") + 3;
         String begin = url.substring(index);
-        index = begin.indexOf("?");
+        index = begin.indexOf("&");
         String part;
         if (index!=-1)  part = begin.substring(0, index);
         else part = begin;
         return part;
     }
     
+    public static void main(String[] args){
+        System.out.println(getID("https://www.youtube.com/watch?v=FLFHKJXmu-0&list=PLvouKvgDnbErf8bNwnvUnyKu9ol-WUfdt&index=1"));
+    }
     
 }
