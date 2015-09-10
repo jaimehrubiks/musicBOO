@@ -8,11 +8,12 @@ import javax.swing.table.DefaultTableModel;
  */
     public class TableModel extends DefaultTableModel {
         
-    private boolean[][] editable_cells;    
+        private static int maxResults = 20;
+        private boolean[][] editable_cells;    
         
     public TableModel(Object[] columnNames, int emptyRows){
         super(columnNames, emptyRows);
-        this.editable_cells = new boolean[10][10];
+        this.editable_cells = new boolean[maxResults][maxResults];
         
     }
     
