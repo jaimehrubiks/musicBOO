@@ -32,6 +32,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rightClickCopyActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="rightClickPlay">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Play Video [Multi]"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rightClickPlayActionPerformed"/>
+          </Events>
+        </MenuItem>
       </SubComponents>
     </Container>
   </NonVisualComponents>
@@ -457,6 +465,69 @@
                 </Component>
               </SubComponents>
             </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="playTab">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Media Player">
+                <Property name="tabTitle" type="java.lang.String" value="Media Player"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="465" max="32767" attributes="0"/>
+                          </Group>
+                          <Component id="playField" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="playButton" min="-2" pref="112" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabel21" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="playField" linkSize="13" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="playButton" linkSize="13" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="183" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="jLabel21">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Play a YouTube video. Paste here an URL and musicBOO will stream it for you."/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="playButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Play"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playButtonActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JTextField" name="playField">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="playFieldKeyPressed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="downTab">
@@ -1015,7 +1086,7 @@
                       <Color blue="0" green="ff" red="0" type="rgb"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.5.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows GUI for youtube api v3, youtube-dl and FFmpeg, and allows the user to search,&#xa; download, and convert online videos easily.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. This program may be used&#xa; to download copyright-free content, personally uploaded data, or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information and&#xa; materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before."/>
+                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.5.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa;&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows, OSX and Linux GUI for youtube api v3, youtube-dl and FFmpeg, and allows the user to search,&#xa; download, and convert online videos easily. It also provides mpv as a full media player and streaming.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. This program may be used&#xa; to download copyright-free content, personally uploaded data, or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information and&#xa; materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before."/>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                 </Component>

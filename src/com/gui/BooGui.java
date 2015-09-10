@@ -105,6 +105,7 @@ public class BooGui extends javax.swing.JFrame {
         rightClickAudio = new javax.swing.JMenuItem();
         rightClickVideo = new javax.swing.JMenuItem();
         rightClickCopy = new javax.swing.JMenuItem();
+        rightClickPlay = new javax.swing.JMenuItem();
         paneLog = new javax.swing.JPanel();
         scrollLog = new javax.swing.JScrollPane();
         outputLogger = new javax.swing.JTextArea();
@@ -130,6 +131,10 @@ public class BooGui extends javax.swing.JFrame {
         playListField = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
+        playTab = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        playButton = new javax.swing.JButton();
+        playField = new javax.swing.JTextField();
         downTab = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         downloadsTable = new javax.swing.JTable();
@@ -203,6 +208,14 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
         rightClickMenu.add(rightClickCopy);
+
+        rightClickPlay.setText("Play Video [Multi]");
+        rightClickPlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightClickPlayActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(rightClickPlay);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -412,6 +425,52 @@ public class BooGui extends javax.swing.JFrame {
         playlistTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playListField, startPlayList});
 
         jTabbedPane1.addTab("Playlists...", playlistTab);
+
+        jLabel21.setText("Play a YouTube video. Paste here an URL and musicBOO will stream it for you.");
+
+        playButton.setText("Play");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
+
+        playField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                playFieldKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout playTabLayout = new javax.swing.GroupLayout(playTab);
+        playTab.setLayout(playTabLayout);
+        playTabLayout.setHorizontalGroup(
+            playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(playTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(playTabLayout.createSequentialGroup()
+                        .addComponent(jLabel21)
+                        .addGap(0, 465, Short.MAX_VALUE))
+                    .addComponent(playField))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        playTabLayout.setVerticalGroup(
+            playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playButton))
+                .addContainerGap(183, Short.MAX_VALUE))
+        );
+
+        playTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playButton, playField});
+
+        jTabbedPane1.addTab("Media Player", playTab);
 
         downloadsTable.setModel(downModel);
         downloadsTable.setRowHeight(50);
@@ -708,7 +767,7 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1.setFont(new java.awt.Font("Courier New", 0, 13)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(0, 255, 0));
         jTextArea1.setRows(5);
-        jTextArea1.setText("\n © MUSICBOO v1.5.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n App description:\n -\"MUSICBOO\" can be considered as a Windows GUI for youtube api v3, youtube-dl and FFmpeg, and allows the user to search,\n download, and convert online videos easily.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. This program may be used\n to download copyright-free content, personally uploaded data, or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information and\n materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.");
+        jTextArea1.setText("\n © MUSICBOO v1.5.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n\n App description:\n -\"MUSICBOO\" can be considered as a Windows, OSX and Linux GUI for youtube api v3, youtube-dl and FFmpeg, and allows the user to search,\n download, and convert online videos easily. It also provides mpv as a full media player and streaming.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. This program may be used\n to download copyright-free content, personally uploaded data, or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information and\n materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.");
         jTextArea1.setFocusable(false);
         jScrollPane2.setViewportView(jTextArea1);
 
@@ -1006,6 +1065,26 @@ public class BooGui extends javax.swing.JFrame {
         clpbrd.setContents(stringSelection, null);
     }//GEN-LAST:event_rightClickCopyActionPerformed
 
+    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+        // TODO add your handling code here:
+            if(aPlay==null) aPlay = new AudioPlayer(BooGui.this);
+            aPlay.setURL(playField.getText());
+            playField.setText((""));
+            aPlay.playAlways();
+    }//GEN-LAST:event_playButtonActionPerformed
+
+    private void playFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_playFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_playFieldKeyPressed
+
+    private void rightClickPlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightClickPlayActionPerformed
+        // TODO add your handling code here:
+            String id = boo.currentVideos.get(videoTable.getSelectedRow()).getID() ;
+            if(aPlay==null) aPlay = new AudioPlayer(BooGui.this);
+            aPlay.setID(id);
+            aPlay.playAlways();
+    }//GEN-LAST:event_rightClickPlayActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1161,6 +1240,22 @@ public class BooGui extends javax.swing.JFrame {
             public void keyReleased(KeyEvent e) {
                 if( e.getKeyCode() == KeyEvent.VK_ENTER )
                     startPlayList.doClick();
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+        });
+        
+        playField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if( e.getKeyCode() == KeyEvent.VK_ENTER )
+                    playButton.doClick();
             }
 
             @Override
@@ -1511,6 +1606,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1540,12 +1636,16 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JTextArea outputLogger;
     private javax.swing.JTextArea outputLogger1;
     private javax.swing.JPanel paneLog;
+    private javax.swing.JButton playButton;
+    private javax.swing.JTextField playField;
     private javax.swing.JTextField playListField;
+    private javax.swing.JPanel playTab;
     private javax.swing.JPanel playlistTab;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem rightClickAudio;
     private javax.swing.JMenuItem rightClickCopy;
     private javax.swing.JPopupMenu rightClickMenu;
+    private javax.swing.JMenuItem rightClickPlay;
     private javax.swing.JMenuItem rightClickVideo;
     private javax.swing.JScrollPane scrollLog;
     private javax.swing.JScrollPane scrollLog1;

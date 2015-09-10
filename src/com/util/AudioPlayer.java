@@ -40,6 +40,15 @@ public class AudioPlayer{
         httpLink = Functions.genLink(id);
     }
     
+    public void setURL(String url){
+        httpLink = url;
+    }
+    
+    public void playAlways(){
+        block = false;
+        play();
+    }
+    
     public void play(){
         
         if (block == true) return;
