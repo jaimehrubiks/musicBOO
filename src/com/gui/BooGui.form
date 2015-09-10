@@ -562,20 +562,19 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="confAudioFormat" linkSize="7" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
                                               <Component id="confKeepOriginalVideo" linkSize="7" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
-                                              <Component id="confVideoOnly" linkSize="7" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="confVideoOnly" linkSize="7" min="-2" pref="80" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                                                  <Component id="jLabel19" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confAudioQuality" linkSize="7" min="-2" pref="78" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="confOriginalVideoFormat" linkSize="7" min="-2" pref="78" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confPostVideoConvert" linkSize="7" min="-2" pref="78" max="-2" attributes="0"/>
-                                                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
@@ -583,8 +582,13 @@
                                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                                   <Component id="confParallelValue" min="-2" pref="131" max="-2" attributes="0"/>
                                               </Group>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Component id="confOriginalVideoFormat" min="-2" pref="152" max="-2" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="388" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="343" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -604,6 +608,8 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="confDefaults" linkSize="9" min="-2" pref="138" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="confDiscardButton" linkSize="9" min="-2" pref="113" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="configSaveButton" linkSize="9" min="-2" pref="120" max="-2" attributes="0"/>
@@ -663,6 +669,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="confVideoOnly" linkSize="8" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="jLabel19" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                           <Component id="jSeparator7" min="-2" pref="15" max="-2" attributes="0"/>
@@ -691,6 +698,7 @@
                               <Component id="confDefaults" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="configSaveButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="confDiscardButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -919,6 +927,16 @@
                 <Component class="javax.swing.JLabel" name="confParallelValue">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="5"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel19">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Use YES to download VIDEOS from youtube. NO for music."/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel20">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="**Remember to save changes**"/>
                   </Properties>
                 </Component>
               </SubComponents>
