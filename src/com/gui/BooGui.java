@@ -18,6 +18,8 @@ import java.awt.Desktop;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -45,104 +47,46 @@ import javax.swing.table.TableColumn;
  */
 public class BooGui extends javax.swing.JFrame {
 
+    /* Managers */
+    private BooManager boo;
+    private AudioPlayer aPlay;
+    
+    /* UI Components */
+    private TableModel     model;
+    private DownTableModel downModel;
+    private OnExitForm exitForm;
+    
+    /* Images */
+    private ImageIcon    playImage       = new ImageIcon( getClass().getResource("/img/youtube1.png") );
+    private ImageIcon    playOkImage     = new ImageIcon( getClass().getResource("/img/youtube1ok.png") );
+    private ImageIcon    downloadImage   = new ImageIcon( getClass().getResource("/img/download1.png") );
+    private ImageIcon    downloadOkImage = new ImageIcon( getClass().getResource("/img/downloadok1.png") );
+    private ImageIcon    icon =            new ImageIcon( getClass().getResource("/img/icon.png") );
+    
+    /* Global Variables */
+    private int downloadsCount = 0;
+
+
+    
     /**
      * Creates new form BooGui
      */
     public BooGui() {
         
-        File configFolder = new File("./config");
-        if(!configFolder.exists()) configFolder.mkdir();
-        File downFolder = new File("./downloads");
-        if(!downFolder.exists()) downFolder.mkdir();
         
-        this.setIconImage(icon.getImage());
-        
-        
+        //Run Initial UI Components
         startAPP();
+        
+        //Netbeans UI Components
         initComponents();
-        initColumns();
+        
+        //After-Components setup
+        afterAPP();
         
         
-        //SELECT ON FOCUS
-        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(searchField.getText().equalsIgnoreCase("Input Song Title"))
-                            searchField.setText("");
-                        searchField.selectAll();
-                    }
-                });
-            }
-        });
-        //
-        //this.getRootPane().setDefaultButton(searchButton);
-       
-        
-        //progressBar.set
-        paneLog.setVisible(false);
-        progressBar.setValue(0);
-        UserSettings.loadProperties();
-        loadSettingsToForm();
-        
-        (( WebProgressBar) progressBar).setProgressTopColor(Color.CYAN);
-        (( WebProgressBar) progressBar).setProgressBottomColor(Color.darkGray);
-                
-        (( WebProgressBar) urlParserBar).setProgressTopColor(Color.GREEN);
-        (( WebProgressBar) urlParserBar).setProgressBottomColor(Color.darkGray);
-        //(( WebProgressBar) urlParserBar).setString("0%");
-        (( WebProgressBar) urlParserBar).setStringPainted(true);
-        //progressBar).
-        
-        searchField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchButton.doClick();
-            }
-        });
-        
-        playListField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                startPlayList.doClick();
-            }
-        });
-        
-          //videoTable.setRowSorter(new TableRowSorter(model));
-          progressBar.setValue(0);
-          progressBar.setMaximum(1000);
-        
-          //DefaultCaret caret = (DefaultCaret) jTextArea1.getCaret();
-          // caret.setUpdatePolicy(DefaultCaret.NEVER_UPDATE);
-          jTextArea1.setCaretPosition(0);
-          
-          setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-          
-          videoTable.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent e) {
-                // Left mouse click
-                if (SwingUtilities.isLeftMouseButton(e)) {
-                    // Do something
-                } // Right mouse click
-                else if (SwingUtilities.isRightMouseButton(e) )
-		 {
-                    // get the coordinates of the mouse click
-                    Point p = e.getPoint();
 
-                    // get the row index that contains that coordinate
-                    int rowNumber = videoTable.rowAtPoint(p);
 
-                    // Get the ListSelectionModel of the JTable
-                    ListSelectionModel model = videoTable.getSelectionModel();
-
-			// set the selected interval of rows. Using the "rowNumber"
-                    // variable for the beginning and end selects only that one row.
-                    model.setSelectionInterval(rowNumber, rowNumber);
-                }
-            }
-        });
+        
     }
 
     /**
@@ -1067,10 +1011,20 @@ public class BooGui extends javax.swing.JFrame {
         });
     }
     
-    public void startAPP(){
-        boo = new BooManager();
+    private void startAPP(){
+        
+        /* Some Initial Configs */
+        File configFolder = new File("./config");
+        if(!configFolder.exists()) configFolder.mkdir();
+        File downFolder = new File("./downloads");
+        if(!downFolder.exists()) downFolder.mkdir();
+        this.setIconImage(icon.getImage());
+        
+        /* Boo Manager Instance and reference to UI */
+        boo = new BooManager(); 
         boo.setGuiRef(this);
         
+        /* Video jTable Setup */
         String[] columnNames = new String[]{ "Image" , "Title" , "Duration" , "Uploader", "Hits", "Preview" , "Download" };
         model = new TableModel(columnNames,0);
         columnNames = new String[]{ "Image" , "Title" , "Duration" , "Progress" };
@@ -1079,7 +1033,138 @@ public class BooGui extends javax.swing.JFrame {
         
     }
     
-    private void initColumns() {
+    private void afterAPP(){
+        /* Some fixes */
+        paneLog.setVisible(false);
+        jTextArea1.setCaretPosition(0);
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        
+        /* Configs table renderers and properties */
+        tableConfig();
+        
+        /* Configs for Progress Bars */
+        progressBarConfig();
+        
+        /* Event Handlers */
+        eventHandlers();
+        
+        /* Load Settings */
+        UserSettings.loadProperties();
+        loadSettingsToForm();
+        
+    }
+    
+    private void progressBarConfig(){
+        progressBar.setValue(0);
+        
+        (( WebProgressBar) progressBar).setProgressTopColor(Color.CYAN);
+        (( WebProgressBar) progressBar).setProgressBottomColor(Color.darkGray);
+                
+        (( WebProgressBar) urlParserBar).setProgressTopColor(Color.GREEN);
+        (( WebProgressBar) urlParserBar).setProgressBottomColor(Color.darkGray);
+        //(( WebProgressBar) urlParserBar).setString("0%");
+        (( WebProgressBar) urlParserBar).setStringPainted(true);
+        //progressBar).
+        
+        
+        
+          //videoTable.setRowSorter(new TableRowSorter(model));
+          progressBar.setValue(0);
+          progressBar.setMaximum(1000);
+        
+
+         
+    }
+    
+    private void eventHandlers(){
+        
+        /* Select Search Field on Focus */
+        searchField.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(searchField.getText().equalsIgnoreCase("Input Song Title"))
+                            searchField.setText("");
+                        searchField.selectAll();
+                    }
+                });
+            }
+        });
+        
+//        searchField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                searchButton.doClick();
+//            }
+//        });
+//        
+//        playListField.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                startPlayList.doClick();
+//            }
+//        });
+        
+        searchField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if( e.getKeyCode() == KeyEvent.VK_ENTER )
+                    searchButton.doClick();
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+        });
+        
+        playListField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                if( e.getKeyCode() == KeyEvent.VK_ENTER )
+                    startPlayList.doClick();
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+            }
+        });
+        
+        videoTable.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                // Left mouse click
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    // Do something
+                } // Right mouse click
+                else if (SwingUtilities.isRightMouseButton(e) )
+		 {
+                    // get the coordinates of the mouse click
+                    Point p = e.getPoint();
+
+                    // get the row index that contains that coordinate
+                    int rowNumber = videoTable.rowAtPoint(p);
+
+                    // Get the ListSelectionModel of the JTable
+                    ListSelectionModel model = videoTable.getSelectionModel();
+
+			// set the selected interval of rows. Using the "rowNumber"
+                    // variable for the beginning and end selects only that one row.
+                    model.setSelectionInterval(rowNumber, rowNumber);
+                }
+            }
+        });
+    }
+    
+    private void tableConfig() {
         //SEARCH TABLE
         TableColumn column = null;
         videoTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -1143,7 +1228,7 @@ public class BooGui extends javax.swing.JFrame {
         }
     };
     
-            //Función para Download
+        //Función para Download
     Action downloadAction = new AbstractAction() {
         @Override
         public void actionPerformed(ActionEvent e)
@@ -1316,17 +1401,7 @@ public class BooGui extends javax.swing.JFrame {
     }
     
     
-    private BooManager boo;
-    private TableModel     model;
-    private DownTableModel downModel;
-    ImageIcon    playImage       = new ImageIcon( getClass().getResource("/img/youtube1.png") );
-    ImageIcon    playOkImage     = new ImageIcon( getClass().getResource("/img/youtube1ok.png") );
-    ImageIcon    downloadImage   = new ImageIcon( getClass().getResource("/img/download1.png") );
-    ImageIcon    downloadOkImage = new ImageIcon( getClass().getResource("/img/downloadok1.png") );
-    ImageIcon    icon =            new ImageIcon( getClass().getResource("/img/icon.png") );
-    private int downloadsCount = 0;
-    private OnExitForm exitForm;
-    private AudioPlayer aPlay;
+
     //private SelectFolder downloadFolderForm;
     
     
