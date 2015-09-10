@@ -16,6 +16,9 @@ import com.util.VideoDownloader;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -101,6 +104,7 @@ public class BooGui extends javax.swing.JFrame {
         rightClickMenu = new javax.swing.JPopupMenu();
         rightClickAudio = new javax.swing.JMenuItem();
         rightClickVideo = new javax.swing.JMenuItem();
+        rightClickCopy = new javax.swing.JMenuItem();
         paneLog = new javax.swing.JPanel();
         scrollLog = new javax.swing.JScrollPane();
         outputLogger = new javax.swing.JTextArea();
@@ -191,6 +195,14 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
         rightClickMenu.add(rightClickVideo);
+
+        rightClickCopy.setLabel("Copy URL");
+        rightClickCopy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rightClickCopyActionPerformed(evt);
+            }
+        });
+        rightClickMenu.add(rightClickCopy);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -986,6 +998,14 @@ public class BooGui extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchFieldKeyReleased
 
+    private void rightClickCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightClickCopyActionPerformed
+        // TODO add your handling code here:
+        String url = Functions.genLink( boo.currentVideos.get(videoTable.getSelectedRow()).getID() );
+        StringSelection stringSelection = new StringSelection(url);
+        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clpbrd.setContents(stringSelection, null);
+    }//GEN-LAST:event_rightClickCopyActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1524,6 +1544,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JPanel playlistTab;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JMenuItem rightClickAudio;
+    private javax.swing.JMenuItem rightClickCopy;
     private javax.swing.JPopupMenu rightClickMenu;
     private javax.swing.JMenuItem rightClickVideo;
     private javax.swing.JScrollPane scrollLog;
