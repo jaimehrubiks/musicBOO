@@ -28,6 +28,7 @@ import javax.swing.JTextArea;
  */
 public class AudioPlayer{
     
+    private static boolean block = false;
     private BooGui guiRef;
     private String httpLink;
     
@@ -40,6 +41,9 @@ public class AudioPlayer{
     }
     
     public void play(){
+        
+        if (block == true) return;
+        else               block = true;
         
         final JTextArea logger = guiRef.getLog1Output();
         
@@ -68,7 +72,6 @@ public class AudioPlayer{
 
                     Process p;
                     p = pb.start();
-
                     BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
                     String str;
                     
@@ -79,11 +82,14 @@ public class AudioPlayer{
                     
                 } catch (IOException ex) {
                     Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                } finally{
+                    block = false;
                 }
 
 
                 
                 logger.setText("End of Stream.");
+                
             }
         });
         
