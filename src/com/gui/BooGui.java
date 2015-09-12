@@ -771,7 +771,7 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1.setFocusable(false);
         jScrollPane2.setViewportView(jTextArea1);
 
-        jLabel17.setText("Make a donation to support the server, the development of new proyects and me");
+        jLabel17.setText("Make a donation to support the \"musicBOO\" server");
 
         jButton1.setText("Donate");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

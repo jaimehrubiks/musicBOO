@@ -1094,7 +1094,7 @@
             </Container>
             <Component class="javax.swing.JLabel" name="jLabel17">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Make a donation to support the server, the development of new proyects and me"/>
+                <Property name="text" type="java.lang.String" value="Make a donation to support the &quot;musicBOO&quot; server"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton1">
