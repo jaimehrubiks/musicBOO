@@ -20,7 +20,6 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -29,6 +28,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,9 +60,10 @@ public class BooGui extends javax.swing.JFrame {
     private AudioPlayer aPlay;
     
     /* UI Components */
-    private TableModel     model;
-    private DownTableModel downModel;
-    private OnExitForm exitForm;
+    private TableModel          model;
+    private DownTableModel      downModel;
+    private FilesTableModel     filesModel;
+    private OnExitForm          exitForm;
     
     /* Images */
     private ImageIcon    playImage       = new ImageIcon( getClass().getResource("/img/youtube1.png") );
@@ -68,7 +74,7 @@ public class BooGui extends javax.swing.JFrame {
     
     /* Global Variables */
     private int downloadsCount = 0;
-
+    private File[] dirList;
 
     
     /**
@@ -135,6 +141,17 @@ public class BooGui extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         playButton = new javax.swing.JButton();
         playField = new javax.swing.JTextField();
+        jSeparator9 = new javax.swing.JSeparator();
+        jLabel22 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        filesTable = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        mediaField = new javax.swing.JTextField();
+        selectMediaButton = new javax.swing.JButton();
+        playMediaButton = new javax.swing.JButton();
+        reloadFilesButton = new javax.swing.JButton();
+        playFilesButton = new javax.swing.JButton();
+        jSeparator11 = new javax.swing.JSeparator();
         downTab = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         downloadsTable = new javax.swing.JTable();
@@ -263,6 +280,7 @@ public class BooGui extends javax.swing.JFrame {
 
         progressBar.setStringPainted(true);
 
+        jTabbedPane1.setFocusable(false);
         jTabbedPane1.setMinimumSize(new java.awt.Dimension(0, 115));
 
         searchField.setText("Input Song Title");
@@ -298,7 +316,7 @@ public class BooGui extends javax.swing.JFrame {
             .addGroup(searchTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(searchTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1241, Short.MAX_VALUE)
                     .addGroup(searchTabLayout.createSequentialGroup()
                         .addComponent(searchField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -313,7 +331,7 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 552, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -344,7 +362,7 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(jScrollPane4)
                     .addGroup(urlTabLayout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addGap(0, 594, Short.MAX_VALUE))
+                        .addGap(0, 765, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, urlTabLayout.createSequentialGroup()
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -359,7 +377,7 @@ public class BooGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(urlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(urlParseButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -418,7 +436,7 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(playListField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startPlayList))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -435,9 +453,55 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
 
+        playField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playFieldActionPerformed(evt);
+            }
+        });
         playField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 playFieldKeyPressed(evt);
+            }
+        });
+
+        jLabel22.setText("Play downloaded music and videos.");
+
+        filesTable.setModel(filesModel);
+        jScrollPane6.setViewportView(filesTable);
+
+        jLabel23.setText("Play any media on your computer:");
+
+        mediaField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mediaFieldActionPerformed(evt);
+            }
+        });
+
+        selectMediaButton.setText("Select");
+        selectMediaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectMediaButtonActionPerformed(evt);
+            }
+        });
+
+        playMediaButton.setText("Play");
+        playMediaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playMediaButtonActionPerformed(evt);
+            }
+        });
+
+        reloadFilesButton.setText("Reload");
+        reloadFilesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reloadFilesButtonActionPerformed(evt);
+            }
+        });
+
+        playFilesButton.setText("Play");
+        playFilesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playFilesButtonActionPerformed(evt);
             }
         });
 
@@ -446,16 +510,57 @@ public class BooGui extends javax.swing.JFrame {
         playTabLayout.setHorizontalGroup(
             playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playTabLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
+                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playTabLayout.createSequentialGroup()
+                        .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator9)
+                            .addComponent(jSeparator11))
+                        .addGap(12, 12, 12))
+                    .addGroup(playTabLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(playTabLayout.createSequentialGroup()
+                                        .addComponent(jLabel23)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))))
+            .addGroup(playTabLayout.createSequentialGroup()
                 .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(playTabLayout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addGap(0, 465, Short.MAX_VALUE))
-                    .addComponent(playField))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(reloadFilesButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playFilesButton))
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addComponent(selectMediaButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(mediaField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playMediaButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(playTabLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 589, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 646, Short.MAX_VALUE))
+                            .addGroup(playTabLayout.createSequentialGroup()
+                                .addComponent(playField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
+
+        playTabLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {playButton, playFilesButton, playMediaButton, reloadFilesButton, selectMediaButton});
+
         playTabLayout.setVerticalGroup(
             playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playTabLayout.createSequentialGroup()
@@ -465,10 +570,29 @@ public class BooGui extends javax.swing.JFrame {
                 .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(playButton))
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playFilesButton)
+                    .addComponent(reloadFilesButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(selectMediaButton)
+                    .addComponent(mediaField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playMediaButton))
+                .addContainerGap())
         );
 
-        playTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playButton, playField});
+        playTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {mediaField, playButton, playField, playFilesButton, playMediaButton, reloadFilesButton, selectMediaButton});
 
         jTabbedPane1.addTab("Media Player", playTab);
 
@@ -490,7 +614,7 @@ public class BooGui extends javax.swing.JFrame {
             .addGroup(downTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(downTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1241, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, downTabLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(openFolderButton)))
@@ -500,7 +624,7 @@ public class BooGui extends javax.swing.JFrame {
             downTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(downTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(openFolderButton)
                 .addContainerGap())
@@ -787,7 +911,7 @@ public class BooGui extends javax.swing.JFrame {
             .addGroup(aboutTabLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(aboutTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1070, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1241, Short.MAX_VALUE)
                     .addGroup(aboutTabLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel17)
@@ -799,7 +923,7 @@ public class BooGui extends javax.swing.JFrame {
             aboutTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(aboutTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -1085,6 +1209,72 @@ public class BooGui extends javax.swing.JFrame {
             aPlay.playAlways();
     }//GEN-LAST:event_rightClickPlayActionPerformed
 
+    private void mediaFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mediaFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mediaFieldActionPerformed
+
+    private void playFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_playFieldActionPerformed
+
+    private void selectMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectMediaButtonActionPerformed
+        // TODO add your handling code here:
+        File open = WebFileChooser.showOpenDialog ();
+        
+        if (open.isFile())
+            mediaField.setText(open.getAbsolutePath());
+    }//GEN-LAST:event_selectMediaButtonActionPerformed
+
+    private void reloadFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reloadFilesButtonActionPerformed
+        // TODO add your handling code here:
+        File dir = new File(UserSettings.configProps.getProperty("DownloadsFolder"));
+        //System.out.println(dir.getAbsolutePath());
+        
+        dirList = dir.listFiles();
+        String[] entry = new String[3];
+        
+        while(  filesModel.getRowCount()!=0  )
+            filesModel.removeRow(0);
+                
+        Date date;
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        format.setTimeZone(TimeZone.getDefault());
+
+        for(File f : dirList){
+            entry[0] = f.getName();
+            entry[1] = String.format("%.4g%n", ((float) f.length())/(1000000)  )+" MB";
+            date = new Date(f.lastModified());
+            
+            entry[2] = format.format(date);
+            if (f.isFile() && !f.isHidden())
+                filesModel.addRow(entry);
+        }
+    }//GEN-LAST:event_reloadFilesButtonActionPerformed
+
+    private void playFilesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playFilesButtonActionPerformed
+        // TODO add your handling code here:
+        File dir = new File(UserSettings.configProps.getProperty("DownloadsFolder"));
+        if(aPlay==null) aPlay = new AudioPlayer(BooGui.this);
+        int[] i = filesTable.getSelectedRows();
+        //String[] list = new String[i.length];
+        List<String> list = new ArrayList<>();
+        for(int j :i ){
+            list.add( dir.getAbsolutePath() + "/"+ (String) filesModel.getValueAt(j, 0));
+        }
+        aPlay.setFilesList(list);
+        //aPlay.setFilesDir(dir);
+        aPlay.playFile();
+    }//GEN-LAST:event_playFilesButtonActionPerformed
+
+    private void playMediaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playMediaButtonActionPerformed
+        // TODO add your handling code here:
+        if(aPlay==null) aPlay = new AudioPlayer(BooGui.this);
+        List<String> list = new ArrayList<>();
+        list.add(mediaField.getText());
+        aPlay.setFilesList(list);
+        aPlay.playFile();
+    }//GEN-LAST:event_playMediaButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1140,7 +1330,9 @@ public class BooGui extends javax.swing.JFrame {
         String[] columnNames = new String[]{ "Image" , "Title" , "Duration" , "Uploader", "Hits", "Preview" , "Download" };
         model = new TableModel(columnNames,0);
         columnNames = new String[]{ "Image" , "Title" , "Duration" , "Progress" };
-        downModel = new DownTableModel(columnNames,0);
+        downModel = new DownTableModel(columnNames,0);        
+        String[] filesNames = new String[]{ "File Name","Size","Date" };
+        filesModel = new FilesTableModel(filesNames,0);
         
         
     }
@@ -1334,6 +1526,15 @@ public class BooGui extends javax.swing.JFrame {
         myCol.setCellRenderer(new ProgressCellRenderer());
         
         downloadsTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
+        
+        //FILES TABLE
+        filesTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        filesTable.getColumnModel().getColumn(1).setMinWidth(100);
+        filesTable.getColumnModel().getColumn(1).setMaxWidth(100);
+        filesTable.getColumnModel().getColumn(2).setMinWidth(150);
+        filesTable.getColumnModel().getColumn(2).setMaxWidth(150);
+        filesTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
+        filesTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
         
     }
     
@@ -1591,6 +1792,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JButton configSaveButton;
     private javax.swing.JPanel downTab;
     private javax.swing.JTable downloadsTable;
+    private javax.swing.JTable filesTable;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -1607,6 +1809,8 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1620,7 +1824,9 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1628,20 +1834,25 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JToggleButton logButton;
+    private javax.swing.JTextField mediaField;
     private javax.swing.JButton openFolderButton;
     private javax.swing.JTextArea outputLogger;
     private javax.swing.JTextArea outputLogger1;
     private javax.swing.JPanel paneLog;
     private javax.swing.JButton playButton;
     private javax.swing.JTextField playField;
+    private javax.swing.JButton playFilesButton;
     private javax.swing.JTextField playListField;
+    private javax.swing.JButton playMediaButton;
     private javax.swing.JPanel playTab;
     private javax.swing.JPanel playlistTab;
     private javax.swing.JProgressBar progressBar;
+    private javax.swing.JButton reloadFilesButton;
     private javax.swing.JMenuItem rightClickAudio;
     private javax.swing.JMenuItem rightClickCopy;
     private javax.swing.JPopupMenu rightClickMenu;
@@ -1652,6 +1863,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     private javax.swing.JPanel searchTab;
+    private javax.swing.JButton selectMediaButton;
     private javax.swing.JScrollPane settingsTab;
     private javax.swing.JButton startPlayList;
     private javax.swing.JButton urlParseButton;
