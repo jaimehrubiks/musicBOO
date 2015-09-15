@@ -24,7 +24,9 @@ public class ProgressCellRenderer extends WebProgressBar
     setString("0%");
     setStringPainted(true);
     setProgressTopColor(Color.cyan);
-    setProgressBottomColor(Color.DARK_GRAY);
+    setProgressBottomColor(Color.cyan);
+    super.setHighlightDarkWhite(Color.cyan);
+    //super.setp
     //setBackground(Color.GREEN);
     //setForeground(Color.BLUE);
     //setBgBottom(Color.blue);
