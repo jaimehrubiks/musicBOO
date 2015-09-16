@@ -46,7 +46,6 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 
@@ -76,6 +75,9 @@ public class BooGui extends javax.swing.JFrame {
     /* Global Variables */
     private int downloadsCount = 0;
     private File[] dirList;
+    
+    private Color cyanProgress = new Color(0,204,204);
+    private Color cyanSelected = new Color(200,255,255);
 
     
     /**
@@ -83,6 +85,7 @@ public class BooGui extends javax.swing.JFrame {
      */
     public BooGui() {
         
+        this.setTitle("musicBOO // Youtube music and video downloader");
         
         //Run Initial UI Components
         startAPP();
@@ -641,6 +644,10 @@ public class BooGui extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Downloads", downTab);
+
+        settingsTab.setFocusable(false);
+
+        jPanel1.setFocusable(false);
 
         jLabel1.setText("Downloads Folder");
 
@@ -1547,6 +1554,14 @@ public class BooGui extends javax.swing.JFrame {
         filesTable.getColumnModel().getColumn(1).setCellRenderer( centerRenderer );
         filesTable.getColumnModel().getColumn(2).setCellRenderer( centerRenderer );
         
+        //Selection Background
+        videoTable.setSelectionBackground(cyanSelected);
+        videoTable.setSelectionForeground(Color.BLACK);
+        filesTable.setSelectionBackground(cyanSelected);
+        filesTable.setSelectionForeground(Color.BLACK);
+        downloadsTable.setSelectionBackground(cyanSelected);
+        downloadsTable.setSelectionForeground(Color.BLACK);
+        
     }
     
         //Función para Youtube
@@ -1694,8 +1709,8 @@ public class BooGui extends javax.swing.JFrame {
         progressBar.setMaximum(downModel.getRowCount()+1);
         
         if(progressBar.getValue()==progressBar.getMaximum()){
-            (( WebProgressBar) progressBar).setProgressTopColor(Color.GREEN);
-            (( WebProgressBar) progressBar).setProgressBottomColor(Color.GREEN);
+            (( WebProgressBar) progressBar).setProgressTopColor(cyanProgress);
+            (( WebProgressBar) progressBar).setProgressBottomColor(cyanProgress);
             //(( WebProgressBar) progressBar).setForeground(Color.white);
             //System.out.println(progressBar.getForeground());
         }
