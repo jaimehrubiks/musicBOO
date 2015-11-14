@@ -16,6 +16,14 @@ MusicBOO is a multi platform software created to download music and video easily
 
 You can download musicBOO in https://github.com/jaimehrubiks/musicBOO/releases
 
+## Changelog v1.6.0.0
+
+	[Fix]		A youtube update caused problems in some downloads. Fixed
+	[Feat] 		Auto-Update system which updates youtube-dl when user wants. So musicBOO's url downloader will work 'forever' without needing to re-download newer versions.
+	[New]		You can download from multiple sites, now a list of them is provided.
+	[Bad news]	Dropped native (bundled) support for osx (temporal). Don't have time to find a solution.
+	This means osx users will need java installed, and won't have an icon in the taskbar.
+
 ## Changelog v1.5.0.0
 
     [Tweak] 		    New colors and icons. New logo and smaller icon.
