@@ -14,6 +14,7 @@ import com.util.AudioPlayer;
 import com.util.Functions;
 import com.util.PlayListDownloader;
 import com.util.VideoDownloader;
+import com.util.YoutubeUpdater;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Point;
@@ -61,7 +62,7 @@ import javax.swing.table.TableColumn;
 public class BooGui extends javax.swing.JFrame {
 
     
-    private final String appTitle = "musicBOO v1.5 // youtube music and video downloader";
+    private final String appTitle = "musicBOO v1.6.1 // youtube music and video downloader";
     
     /* Managers */
     private BooManager boo;
@@ -133,7 +134,7 @@ public class BooGui extends javax.swing.JFrame {
         scrollLog1 = new javax.swing.JScrollPane();
         outputLogger1 = new javax.swing.JTextArea();
         progressBar = new WebProgressBar();
-        tabsPane = new javax.swing.JTabbedPane();
+        helpTab = new javax.swing.JTabbedPane();
         searchTab = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -152,6 +153,9 @@ public class BooGui extends javax.swing.JFrame {
         playListField = new javax.swing.JTextField();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTextArea2 = new javax.swing.JTextArea();
+        jLabel25 = new javax.swing.JLabel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        siteslist = new javax.swing.JTextArea();
         playTab = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         playButton = new javax.swing.JButton();
@@ -214,6 +218,13 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jLabel17 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
+        jLabel26 = new javax.swing.JLabel();
         logButton = new javax.swing.JToggleButton();
         topPanel = new javax.swing.JPanel();
         newlogo = new javax.swing.JLabel();
@@ -298,15 +309,15 @@ public class BooGui extends javax.swing.JFrame {
 
         progressBar.setStringPainted(true);
 
-        tabsPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tabsPane.setDoubleBuffered(true);
-        tabsPane.setFocusable(false);
-        tabsPane.setMinimumSize(new java.awt.Dimension(0, 115));
-        tabsPane.setName(""); // NOI18N
-        tabsPane.setRequestFocusEnabled(false);
-        tabsPane.addMouseListener(new java.awt.event.MouseAdapter() {
+        helpTab.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        helpTab.setDoubleBuffered(true);
+        helpTab.setFocusable(false);
+        helpTab.setMinimumSize(new java.awt.Dimension(0, 115));
+        helpTab.setName(""); // NOI18N
+        helpTab.setRequestFocusEnabled(false);
+        helpTab.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tabsPaneMouseClicked(evt);
+                helpTabMouseClicked(evt);
             }
         });
 
@@ -358,13 +369,13 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(searchButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         searchTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {searchButton, searchField});
 
-        tabsPane.addTab("Search", searchTab);
+        helpTab.addTab("Search", searchTab);
 
         jLabel13.setText("Paste Youtube videos URLs to download them all. Put one URL on each Line.");
 
@@ -406,7 +417,7 @@ public class BooGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(urlTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(urlParseButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,7 +428,7 @@ public class BooGui extends javax.swing.JFrame {
 
         urlTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {urlParseButton, urlParserBar});
 
-        tabsPane.addTab("URL Parser", urlTab);
+        helpTab.addTab("URL Parser", urlTab);
 
         jLabel18.setText("Paste a youtube URL. It may be a Playlist, Channel or Video... musicBOO will attempt to download it using your user Settings.");
 
@@ -441,18 +452,33 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea2.setFocusable(false);
         jScrollPane5.setViewportView(jTextArea2);
 
+        jLabel25.setText("You can also download videos from the following places:");
+
+        siteslist.setEditable(false);
+        siteslist.setColumns(20);
+        siteslist.setRows(5);
+        siteslist.setText("1tv: Первый канал\n1up.com\n220.ro\n22tracks:genre\n22tracks:track\n24video\n3sat\n4tube\n56.com\n5min\n8tracks\n91porn\n9gag\nabc.net.au\nAbc7News\nAcademicEarth:Course\nAddAnime\nAdobeTV\nAdobeTVVideo\nAdultSwim\nAftenposten\nAftonbladet\nAirMozilla\nAlJazeera\nAllocine\nAlphaPorno\nanitube.se\nAnySex\nAparat\nAppleConnect\nAppleDaily: 臺灣蘋果日報\nAppleTrailers\narchive.org: archive.org videos\nARD\nARD:mediathek\narte.tv\narte.tv:+7\narte.tv:concert\narte.tv:creative\narte.tv:ddc\narte.tv:embed\narte.tv:future\nAtresPlayer\nATTTechChannel\naudiomack\naudiomack:album\nAzubu\nBaiduVideo: 百度视频\nbambuser\nbambuser:channel\nBandcamp\nBandcamp:album\nbbc: BBC\nbbc.co.uk: BBC iPlayer\nbbc.co.uk:article: BBC articles\nBeatportPro\nBeeg\nBehindKink\nBet\nBild: Bild.de\nBiliBili\nblinkx\nblip.tv:user\nBlipTV\nBloomberg\nBpb: Bundeszentrale für politische Bildung\nBR: Bayerischer Rundfunk Mediathek\nBreak\nBrightcove\nbt:article: Bergens Tidende Articles\nbt:vestlendingen: Bergens Tidende - Vestlendingen\nBuzzFeed\nBYUtv\nCamdemy\nCamdemyFolder\nCanal13cl\ncanalc2.tv\nCanalplus: canalplus.fr, piwiplus.fr and d8.tv\nCBS\nCBSNews: CBS News\nCBSSports\nCeskaTelevize\nchannel9: Channel 9\nChaturbate\nChilloutzone\nchirbit\nchirbit:profile\nCinchcast\nCinemassacre\nClipfish\ncliphunter\nClipsyndicate\nCloudy\nClubic\nClyp\ncmt.com\nCNET\nCNN\nCNNArticle\nCNNBlogs\nCollegeHumor\nCollegeRama\nComCarCoff\nComedyCentral\nComedyCentralShows: The Daily Show / The Colbert Report\nCondeNast: Condé Nast media group: Allure, Architectural Digest, Ars Technica, Bon Appétit, Brides, Condé Nast, Condé Nast Traveler, Details, Epicurious, GQ, Glamour, Golf Digest, SELF, Teen Vogue, The New Yorker, Vanity Fair, Vogue, W Magazine, WIRED\nCracked\nCriterion\nCrooksAndLiars\nCrunchyroll\ncrunchyroll:playlist\nCSpan: C-SPAN\nCtsNews: 華視新聞\nculturebox.francetvinfo.fr\ndailymotion\ndailymotion:playlist\ndailymotion:user\nDailymotionCloud\ndaum.net\nDBTV\nDCN\nDctpTv\nDeezerPlaylist\ndefense.gouv.fr\ndemocracynow\nDHM: Filmarchiv - Deutsches Historisches Museum\nDiscovery\nDotsub\nDouyuTV: 斗鱼\ndramafever\ndramafever:series\nDRBonanza\nDropbox\nDrTuber\nDRTV\nDump\nDumpert\ndvtv: http://video.aktualne.cz/\nEaglePlatform\nEbaumsWorld\nEchoMsk\neHow\nEinthusan\neitb.tv\nEllenTV\nEllenTV:clips\nElPais: El País\nEmbedly\nEMPFlix\nEngadget\nEporner\nEroProfile\nEscapist\nESPN (Currently broken)\nEsriVideo\nEuropa\nEveryonesMixtape\nexfm: ex.fm\nExpoTV\nExtremeTube\nfacebook\nfaz.net\nfc2\nFczenit\nfernsehkritik.tv\nFirstpost\nFiveTV\nFlickr\nFolketinget: Folketinget (ft.dk; Danish parliament)\nFootyRoom\nFoxgay\nFoxNews: Fox News and Fox Business Video\nFoxSports\nfrance2.fr:generation-quoi\nFranceCulture\nFranceInter\nfrancetv: France 2, 3, 4, 5 and Ô\nfrancetvinfo.fr\nFreesound\nfreespeech.org\nFreeVideo\nFunnyOrDie\nGamekings\nGameOne\ngameone:playlist\nGamersyde\nGameSpot\nGameStar\nGametrailers\nGazeta\nGDCVault\ngeneric: Generic downloader that works on some sites\nGfycat\nGiantBomb\nGiga\nGlide: Glide mobile video messages (glide.me)\nGlobo\nGloboArticle\nGodTube\nGoldenMoustache\nGolem\nGoshgay\nGroupon\nHark\nHearThisAt\nHeise\nHellPorno\nHelsinki: helsinki.fi\nHentaiStigma\nHistoricFilms\nHistory\nhitbox\nhitbox:live\nHornBunny\nHotNewHipHop\nHowcast\nHowStuffWorks\nHuffPost: Huffington Post\nHypem\nIconosquare\nign.com\nimdb: Internet Movie Database trailers\nimdb:list: Internet Movie Database lists\nImgur\nImgurAlbum\nIna\nIndavideo\nIndavideoEmbed\nInfoQ\nInstagram\ninstagram:user: Instagram user profile\nInternetVideoArchive\nIPrima\niqiyi: 爱奇艺\nIr90Tv\nivi: ivi.ru\nivi:compilation: ivi.ru compilations\nIzlesene\nJadoreCettePub\nJeuxVideo\nJove\njpopsuki.tv\nJukebox\nKaltura\nKanalPlay: Kanal 5/9/11 Play\nKankan\nKaraoketv\nKarriereVideos\nkeek\nKeezMovies\nKhanAcademy\nKickStarter\nkontrtube: KontrTube.ru - Труба зовёт\nKrasView: Красвью\nKu6\nkuwo:album: 酷我音乐 - 专辑\nkuwo:category: 酷我音乐 - 分类\nkuwo:chart: 酷我音乐 - 排行榜\nkuwo:mv: 酷我音乐 - MV\nkuwo:singer: 酷我音乐 - 歌手\nkuwo:song: 酷我音乐\nla7.tv\nLaola1Tv\nLecture2Go\nLetv: 乐视网\nLetvPlaylist\nLetvTv\nLibsyn\nlife:embed\nlifenews: LIFE | NEWS\nlimelight\nlimelight:channel\nlimelight:channel_list\nLiveLeak\nlivestream\nlivestream:original\nLnkGo\nlrt.lt\nlynda: lynda.com videos\nlynda:course: lynda.com online courses\nm6\nmacgamestore: MacGameStore trailers\nmailru: Видео@Mail.Ru\nMalemotion\nMDR: MDR.DE and KiKA\nmedia.ccc.de\nmetacafe\nMetacritic\nMgoon\nMinhateca\nMinistryGrid\nmiomio.tv\nMiTele: mitele.es\nmixcloud\nMLB\nMoeVideo: LetitBit video services: moevideo.net, playreplay.net and videochart.net\nMofosex\nMojvideo\nMoniker: allmyvideos.net and vidspot.net\nmooshare: Mooshare.biz\nMorningstar: morningstar.com\nMotherless\nMotorsport: motorsport.com\nMovieClips\nMovieFap\nMoviezine\nmovshare: MovShare\nMPORA\nMSNBC\nMTV\nmtv.de\nmtviggy.com\nmtvservices:embedded\nMuenchenTV: münchen.tv\nMusicPlayOn\nmuzu.tv\nMwave\nMySpace\nMySpace:album\nMySpass\nMyvi\nmyvideo\nMyVidster\nn-tv.de\nNationalGeographic\nNaver\nNBA\nNBC\nNBCNews\nNBCSports\nNBCSportsVPlayer\nndr: NDR.de - Norddeutscher Rundfunk\nndr:embed\nndr:embed:base\nNDTV\nNerdCubedFeed\nNerdist\nnetease:album: 网易云音乐 - 专辑\nnetease:djradio: 网易云音乐 - 电台\nnetease:mv: 网易云音乐 - MV\nnetease:playlist: 网易云音乐 - 歌单\nnetease:program: 网易云音乐 - 电台节目\nnetease:singer: 网易云音乐 - 歌手\nnetease:song: 网易云音乐\nNetzkino\nNewgrounds\nNewstube\nNextMedia: 蘋果日報\nNextMediaActionNews: 蘋果日報 - 動新聞\nnfb: National Film Board of Canada\nnfl.com\nnhl.com\nnhl.com:news: NHL news\nnhl.com:videocenter: NHL videocenter category\nniconico: ニコニコ動画\nNiconicoPlaylist\nnjoy: N-JOY\nnjoy:embed\nNoco\nNormalboots\nNosVideo\nNova: TN.cz, Prásk.tv, Nova.cz, Novaplus.cz, FANDA.tv, Krásná.cz and Doma.cz\nnovamov: NovaMov\nnowness\nnowness:playlist\nnowness:series\nNowTV\nnowvideo: NowVideo\nnpo: npo.nl and ntr.nl\nnpo.nl:live\nnpo.nl:radio\nnpo.nl:radio:fragment\nNRK\nNRKPlaylist\nNRKTV: NRK TV and NRK Radio\nntv.ru\nNuvid\nNYTimes\nNYTimesArticle\nocw.mit.edu\nOdnoklassniki\nOktoberfestTV\non.aol.com\nOnionStudios\nOoyala\nOoyalaExternal\norf:fm4: radio FM4\norf:iptv: iptv.ORF.at\norf:oe1: Radio Österreich 1\norf:tvthek: ORF TVthek\nparliamentlive.tv: UK parliament videos\nPatreon\nPBS\nPeriscope: Periscope\nPhilharmonieDeParis: Philharmonie de Paris\nPhoenix\nPhotobucket\nPinkbike\nPladform\nPlanetaPlay\nplay.fm\nplayed.to\nPlaytvak: Playtvak.cz, iDNES.cz and Lidovky.cz\nPlayvid\nPlaywire\npluralsight\npluralsight:course\nplus.google: Google Plus\npluzz.francetv.fr\npodomatic\nPornHd\nPornHub\nPornHubPlaylist\nPornotube\nPornoVoisines\nPornoXO\nPrimeShareTV\nPromptFile\nprosiebensat1: ProSiebenSat.1 Digital\nPuls4\nPyvideo\nqqmusic: QQ音乐\nqqmusic:album: QQ音乐 - 专辑\nqqmusic:playlist: QQ音乐 - 歌单\nqqmusic:singer: QQ音乐 - 歌手\nqqmusic:toplist: QQ音乐 - 排行榜\nQuickscope: Quick Scope\nQuickVid\nR7\nradio.de\nradiobremen\nradiofrance\nRadioJavan\nRai\nRBMARadio\nRDS: RDS.ca\nRedTube\nRestudy\nReverbNation\nRingTV\nRottenTomatoes\nRoxwel\nRTBF\nRte\nrtl.nl: rtl.nl and rtlxl.nl\nRTL2\nRTP\nRTS: RTS.ch\nrtve.es:alacarta: RTVE a la carta\nrtve.es:infantil: RTVE infantil\nrtve.es:live: RTVE.es live streams\nRTVNH\nRUHD\nrutube: Rutube videos\nrutube:channel: Rutube channels\nrutube:embed: Rutube embedded videos\nrutube:movie: Rutube movies\nrutube:person: Rutube person videos\nRUTV: RUTV.RU\nRuutu\nsafari: safaribooksonline.com online video\nsafari:course: safaribooksonline.com online courses\nSandia: Sandia National Laboratories\nSapo: SAPO Vídeos\nsavefrom.net\nSBS: sbs.com.au\nSciVee\nscreen.yahoo:search: Yahoo screen search\nScreencast\nScreencastOMatic\nScreenwaveMedia\nSenateISVP\nServingSys\nSexu\nSexyKarma: Sexy Karma and Watch Indian Porn\nShahid\nShared: shared.sx and vivo.sx\nShareSix\nSina\nSlideshare\nSlutload\nsmotri: Smotri.com\nsmotri:broadcast: Smotri.com broadcasts\nsmotri:community: Smotri.com community videos\nsmotri:user: Smotri.com user videos\nSnagFilms\nSnagFilmsEmbed\nSnotr\nSohu\nsoompi\nsoompi:show\nsoundcloud\nsoundcloud:playlist\nsoundcloud:set\nsoundcloud:user\nsoundgasm\nsoundgasm:profile\nsouthpark.cc.com\nsouthpark.cc.com:español\nsouthpark.de\nsouthpark.nl\nsouthparkstudios.dk\nSpace\nSpankBang\nSpankwire\nSpiegel\nSpiegel:Article: Articles on spiegel.de\nSpiegeltv\nSpike\nSport5\nSportBox\nSportBoxEmbed\nSportDeutschland\nSportschau\nSrf\nSRMediathek: Saarländischer Rundfunk\nSSA\nstanfordoc: Stanford Open ClassRoom\nSteam\nStitcher\nstreamcloud.eu\nStreamCZ\nStreetVoice\nSunPorno\nSVT\nSVTPlay: SVT Play and Öppet arkiv\nSWRMediathek\nSyfy\nSztvHu\nTagesschau\nTapely\nTass\nteachertube: teachertube.com videos\nteachertube:user:collection: teachertube.com user and collection videos\nTeachingChannel\nTeamcoco\nTeamFour\nTechTalks\ntechtv.mit.edu\nted\nTeleBruxelles\nTelecinco: telecinco.es, cuatro.com and mediaset.es\nTelegraaf\nTeleMB\nTeleTask\nTenPlay\nTestTube\nTF1\nTheOnion\nThePlatform\nThePlatformFeed\nTheSixtyOne\nThisAmericanLife\nThisAV\nTHVideo\nTHVideoPlaylist\ntinypic: tinypic.com videos\ntlc.com\ntlc.de\nTMZ\nTMZArticle\nTNAFlix\ntou.tv\nToypics: Toypics user profile\nToypicsUser: Toypics user profile\nTrailerAddict (Currently broken)\nTrilulilu\nTruTube\nTube8\nTubiTv\nTudou\nTumblr\nTuneIn\nTurbo\nTutv\ntv.dfb.de\nTV2\nTV2Article\nTV4: tv4.se and tv4play.se\nTVC\nTVCArticle\ntvigle: Интернет-телевидение Tvigle.ru\ntvp.pl\ntvp.pl:Series\nTVPlay: TV3Play and related services\nTweakers\ntwitch:bookmarks\ntwitch:chapter\ntwitch:past_broadcasts\ntwitch:profile\ntwitch:stream\ntwitch:video\ntwitch:vod\ntwitter\ntwitter:card\nUbu\nudemy\nudemy:course\nUDNEmbed: 聯合影音\nUltimedia\nUnistra\nUrort: NRK P3 Urørt\nustream\nustream:channel\nVarzesh3\nVbox7\nVeeHD\nVeoh\nVessel\nVesti: Вести.Ru\nVevo\nVGTV: VGTV and BTTV\nvh1.com\nVice\nViddler\nvideo.google:search: Google Video search\nvideo.mit.edu\nVideoDetective\nvideofy.me\nVideoMega\nVideoPremium\nVideoTt: video.tt - Your True Tube\nvideoweed: VideoWeed\nVidme\nVidzi\nvier\nvier:videos\nViewster\nViidea\nviki\nviki:channel\nvimeo\nvimeo:album\nvimeo:channel\nvimeo:group\nvimeo:likes: Vimeo user likes\nvimeo:review: Review pages on vimeo\nvimeo:user\nvimeo:watchlater: Vimeo watch later list, \"vimeowatchlater\" keyword (requires authentication)\nVimple: Vimple - one-click video hosting\nVine\nvine:user\nvk: VK\nvk:uservideos: VK - User's Videos\nvlive\nVodlocker\nVoiceRepublic\nVporn\nvpro: npo.nl and ntr.nl\nVRT\nvube: Vube.com\nVuClip\nvulture.com\nWalla\nWashingtonPost\nwat.tv\nWayOfTheMaster\nWDR\nwdr:mobile\nWDRMaus: Sendung mit der Maus\nWebOfStories\nWebOfStoriesPlaylist\nWeibo\nWimp\nWistia\nWNL\nWorldStarHipHop\nwrzuta.pl\nWSJ: Wall Street Journal\nXBef\nXboxClips\nXFileShare: XFileShare based sites: GorillaVid.in, daclips.in, movpod.in, fastvideo.in, realvid.net, filehoot.com and vidto.me\nXHamster\nXHamsterEmbed\nXMinus\nXNXX\nXstream\nXTube\nXTubeUser: XTube user profile\nXuite: 隨意窩Xuite影音\nXVideos\nXXXYMovies\nYahoo: Yahoo screen and movies\nYam: 蕃薯藤yam天空部落\nyandexmusic:album: Яндекс.Музыка - Альбом\nyandexmusic:playlist: Яндекс.Музыка - Плейлист\nyandexmusic:track: Яндекс.Музыка - Трек\nYesJapan\nyinyuetai:video: 音悦Tai\nYnet\nYouJizz\nyouku: 优酷\nYouPorn\nYourUpload\nyoutube: YouTube.com\nyoutube:channel: YouTube.com channels\nyoutube:favorites: YouTube.com favourite videos, \":ytfav\" for short (requires authentication)\nyoutube:history: Youtube watch history, \":ythistory\" for short (requires authentication)\nyoutube:playlist: YouTube.com playlists\nyoutube:recommended: YouTube.com recommended videos, \":ytrec\" for short (requires authentication)\nyoutube:search: YouTube.com searches\nyoutube:search:date: YouTube.com searches, newest videos first\nyoutube:search_url: YouTube.com search URLs\nyoutube:show: YouTube.com (multi-season) shows\nyoutube:subscriptions: YouTube.com subscriptions feed, \"ytsubs\" keyword (requires authentication)\nyoutube:user: YouTube.com user videos (URL or \"ytuser\" keyword)\nyoutube:watchlater: Youtube watch later list, \":ytwatchlater\" for short (requires authentication)\nZapiks\nZDF\nZDFChannel\nzingmp3:album: mp3.zing.vn albums\nzingmp3:song: mp3.zing.vn songs");
+        siteslist.setAutoscrolls(false);
+        jScrollPane7.setViewportView(siteslist);
+
         javax.swing.GroupLayout playlistTabLayout = new javax.swing.GroupLayout(playlistTab);
         playlistTab.setLayout(playlistTabLayout);
         playlistTabLayout.setHorizontalGroup(
             playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(playlistTabLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playlistTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(playListField)
-                    .addComponent(jScrollPane5)
-                    .addComponent(jLabel18))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(startPlayList)
+                .addGroup(playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane7)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, playlistTabLayout.createSequentialGroup()
+                        .addGroup(playlistTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(playListField, javax.swing.GroupLayout.DEFAULT_SIZE, 838, Short.MAX_VALUE)
+                            .addComponent(jLabel18))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(startPlayList))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, playlistTabLayout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         playlistTabLayout.setVerticalGroup(
@@ -465,13 +491,17 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(playListField, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(startPlayList))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         playlistTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playListField, startPlayList});
 
-        tabsPane.addTab("Playlists...", playlistTab);
+        helpTab.addTab("Playlists...", playlistTab);
 
         jLabel21.setText("Play a YouTube video. Paste here an URL and musicBOO will stream it for you.");
 
@@ -611,7 +641,7 @@ public class BooGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(playTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(playFilesButton)
@@ -631,7 +661,7 @@ public class BooGui extends javax.swing.JFrame {
 
         playTabLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton3, mediaField, playButton, playField, playFilesButton, playMediaButton, reloadFilesButton, selectMediaButton});
 
-        tabsPane.addTab("Media Player", playTab);
+        helpTab.addTab("Media Player", playTab);
 
         downloadsTable.setModel(downModel);
         downloadsTable.setRowHeight(50);
@@ -661,13 +691,13 @@ public class BooGui extends javax.swing.JFrame {
             downTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(downTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(openFolderButton)
                 .addContainerGap())
         );
 
-        tabsPane.addTab("Downloads", downTab);
+        helpTab.addTab("Downloads", downTab);
 
         settingsTab.setFocusable(false);
         settingsTab.setMinimumSize(new java.awt.Dimension(1000, 850));
@@ -802,7 +832,7 @@ public class BooGui extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confVideoOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(97, 97, 97)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confAudioQuality, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(88, 88, 88)
@@ -818,8 +848,8 @@ public class BooGui extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confOriginalVideoFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 431, Short.MAX_VALUE)))
-                                .addGap(0, 115, Short.MAX_VALUE))))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)))
+                                .addGap(0, 142, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -923,7 +953,7 @@ public class BooGui extends javax.swing.JFrame {
 
         settingsTab.setViewportView(jPanel1);
 
-        tabsPane.addTab("Settings", settingsTab);
+        helpTab.addTab("Settings", settingsTab);
 
         jTextArea1.setEditable(false);
         jTextArea1.setBackground(new java.awt.Color(8, 6, 6));
@@ -931,7 +961,7 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1.setFont(new java.awt.Font("Courier New", 0, 13)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(0, 255, 0));
         jTextArea1.setRows(5);
-        jTextArea1.setText("\n © MUSICBOO v1.5.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n\n App description:\n -\"MUSICBOO\" can be considered as a Windows, OSX and Linux GUI for youtube api v3, \n youtube-dl and FFmpeg, and allows the user to search, download, and convert online \n videos easily. It also provides mpv as a full media player and streaming.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. \n This program may be used to download copyright-free content, personally uploaded data, \n or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information \n and materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.\n ");
+        jTextArea1.setText("\n © MUSICBOO v1.6.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n\n App description:\n -\"MUSICBOO\" can be considered as a Windows, OSX and Linux GUI for youtube api v3, \n youtube-dl and FFmpeg, and allows the user to search, download, and convert online \n videos easily. It also provides mpv as a full media player and streaming.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. \n This program may be used to download copyright-free content, personally uploaded data, \n or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information \n and materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.\n ");
         jTextArea1.setFocusable(false);
         jTextArea1.setMinimumSize(new java.awt.Dimension(0, 0));
         jTextArea1.setPreferredSize(new java.awt.Dimension(900, 50));
@@ -965,7 +995,7 @@ public class BooGui extends javax.swing.JFrame {
             aboutTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(aboutTabLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(aboutTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
@@ -973,7 +1003,84 @@ public class BooGui extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tabsPane.addTab("About", aboutTab);
+        helpTab.addTab("About", aboutTab);
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel11.setText("Have problems downloading links? Try to update youtube-dl engine");
+
+        jButton4.setText("UPDATE ENGINE");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel12.setText("Make sure there are no downloads in progress.");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel24.setText("For other problems, try to consult musicBOO software website and check for newer base versions.");
+
+        jButton5.setText("musicBOO WEB");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel26.setText("You can contact me via email or forums. See \"About\" page for more details.");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel24)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel26)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton4, jButton5});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(388, Short.MAX_VALUE))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton4, jButton5, jLabel24, jLabel26});
+
+        helpTab.addTab("Help", jPanel2);
 
         logButton.setText("Show Log");
         logButton.setFocusable(false);
@@ -1018,7 +1125,7 @@ public class BooGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(topPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tabsPane, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(helpTab, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(paneLog, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1032,7 +1139,7 @@ public class BooGui extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(topPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tabsPane, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addComponent(helpTab, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1340,10 +1447,10 @@ public class BooGui extends javax.swing.JFrame {
         Functions.loadLink("http://mpv.io/manual/stable/#keyboard-control");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void tabsPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabsPaneMouseClicked
+    private void helpTabMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_helpTabMouseClicked
         // TODO add your handling code here:
         reloadFilesButton.doClick();
-    }//GEN-LAST:event_tabsPaneMouseClicked
+    }//GEN-LAST:event_helpTabMouseClicked
 
     private void newiconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_newiconMouseClicked
         // TODO add your handling code here:
@@ -1378,6 +1485,29 @@ public class BooGui extends javax.swing.JFrame {
            
             
     }//GEN-LAST:event_newiconMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        Functions.loadLink("http://eldoctordeldesierto.com/musicboo/#download");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        
+        Thread t = new Thread(new YoutubeUpdater(this));
+        t.start();
+        
+//        Executors.newSingleThreadExecutor().execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                // code in here
+//
+//                YoutubeUpdater yd;
+//                yd = new YoutubeUpdater(super);
+//                
+//            }
+//        });
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1441,6 +1571,7 @@ public class BooGui extends javax.swing.JFrame {
         /* Some fixes */
         paneLog.setVisible(false);
         jTextArea1.setCaretPosition(0);
+        siteslist.setCaretPosition(0);
         //setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         
         /* Configs table renderers and properties */
@@ -1914,11 +2045,16 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JPanel downTab;
     private javax.swing.JTable downloadsTable;
     private javax.swing.JTable filesTable;
+    private javax.swing.JTabbedPane helpTab;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -1931,6 +2067,9 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1939,12 +2078,14 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator2;
@@ -1986,8 +2127,8 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JPanel searchTab;
     private javax.swing.JButton selectMediaButton;
     private javax.swing.JScrollPane settingsTab;
+    private javax.swing.JTextArea siteslist;
     private javax.swing.JButton startPlayList;
-    private javax.swing.JTabbedPane tabsPane;
     private javax.swing.JPanel topPanel;
     private javax.swing.JButton urlParseButton;
     private javax.swing.JProgressBar urlParserBar;

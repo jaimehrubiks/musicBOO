@@ -29,6 +29,7 @@ public class PlayListDownloader implements Runnable {
     private String id;
     private BooGui guiRef;
     private int downRef;
+    private boolean plus;
 
     List<String> command;
 
@@ -36,6 +37,8 @@ public class PlayListDownloader implements Runnable {
         this.id = id;
         this.guiRef = guiRef;
         downRef = downref;
+        if(id.toLowerCase().contains("list") || id.toLowerCase().contains("user")) plus = true;
+        else                                                                       plus = false;
     }
 
     private void loadCommandParams() {
@@ -72,8 +75,10 @@ public class PlayListDownloader implements Runnable {
         }
 
         //Video Format
-        command.add("--format");
-        command.add(UserSettings.configProps.getProperty("VideoFormat"));
+        if(id.toLowerCase().contains("youtube")){
+            command.add("--format");
+            command.add(UserSettings.configProps.getProperty("VideoFormat"));
+        }
 
         //Extract Audio
         command.add("--extract-audio");
@@ -138,7 +143,7 @@ public class PlayListDownloader implements Runnable {
 
             while ((line = r.readLine()) != null) {
                 lines = line.replaceAll("\\s+", " ").replaceAll("%", "").split(" ");
-                if (lines[0].equalsIgnoreCase("[download]") && lines[1].equalsIgnoreCase("downloading")
+                if ( plus && lines[0].equalsIgnoreCase("[download]") && lines[1].equalsIgnoreCase("downloading")
                         && lines[2].equalsIgnoreCase("video") && lines[4].equalsIgnoreCase("of") ) {
                     try {
                         float max = Float.parseFloat(lines[5]) +1;
@@ -147,7 +152,15 @@ public class PlayListDownloader implements Runnable {
                         guiRef.setDownStatus(downRef, (int) (val/max*100));
                     } catch (NumberFormatException e) {
                     }
-                } else if (lines[0].equalsIgnoreCase("[ffmpeg]")) {
+                } 
+                
+                else if ( !plus && lines[0].equalsIgnoreCase("[download]")) {
+                    try {
+                        guiRef.setDownStatus(downRef, (int) Float.parseFloat(lines[1]));
+                    } catch (NumberFormatException e) {
+                    }
+                
+                }else if (lines[0].equalsIgnoreCase("[ffmpeg]")) {
                     guiRef.setDownStatus(downRef, 100);
                     guiRef.setDownStatus(downRef, "converting...");
                 }
