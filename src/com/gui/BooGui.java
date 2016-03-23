@@ -227,6 +227,8 @@ public class BooGui extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         sslSel = new javax.swing.JCheckBox();
+        jLabel28 = new javax.swing.JLabel();
+        autoSel = new javax.swing.JCheckBox();
         logButton = new javax.swing.JToggleButton();
         topPanel = new javax.swing.JPanel();
         newlogo = new javax.swing.JLabel();
@@ -1043,6 +1045,16 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
 
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel28.setText("Enable automatic youtube-dl update on start");
+
+        autoSel.setText("Enable auto-update");
+        autoSel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                autoSelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1059,11 +1071,14 @@ public class BooGui extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel24)
-                            .addComponent(jLabel26))
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel28))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(autoSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1095,7 +1110,11 @@ public class BooGui extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                     .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(251, 251, 251))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(autoSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(194, 194, 194))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                     .addContainerGap(370, Short.MAX_VALUE)
@@ -1540,6 +1559,10 @@ public class BooGui extends javax.swing.JFrame {
         UserSettings.saveProperties();
     }//GEN-LAST:event_sslSelActionPerformed
 
+    private void autoSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_autoSelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1617,6 +1640,12 @@ public class BooGui extends javax.swing.JFrame {
         /* Load Settings */
         UserSettings.loadProperties();
         loadSettingsToForm();
+        
+        /* Auto Update */
+        if( autoSel.isEnabled() ){
+            Thread t = new Thread(new YoutubeUpdater(this));
+            t.start();
+        }
         
     }
     
@@ -2030,6 +2059,7 @@ public class BooGui extends javax.swing.JFrame {
         confParallelSlider.setValue( Integer.parseInt(UserSettings.configProps.getProperty("ParallelDownloads")));
         
         sslSel.setSelected( Boolean.parseBoolean(UserSettings.configProps.getProperty("disableSSL")) );
+        autoSel.setSelected( Boolean.parseBoolean(UserSettings.configProps.getProperty("autoupdate")) );
         
         if( !Boolean.parseBoolean(UserSettings.configProps.getProperty("TermsAccepted","false")) )
             new Disclaimer().setVisible(true);
@@ -2063,6 +2093,7 @@ public class BooGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel aboutTab;
+    private javax.swing.JCheckBox autoSel;
     private javax.swing.JComboBox confAudioFormat;
     private javax.swing.JComboBox confAudioQuality;
     private javax.swing.JButton confDefaults;
@@ -2104,6 +2135,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
