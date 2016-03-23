@@ -87,7 +87,7 @@ public class BooGui extends javax.swing.JFrame {
     private int glitch = 0;
     private File[] dirList;
     
-    private Color cyanProgress = new Color(0,204,204);
+    private Color cyanProgress = new Color(13,255,98);
     private Color cyanSelected = new Color(200,255,255);
 
     
@@ -1985,7 +1985,7 @@ public class BooGui extends javax.swing.JFrame {
         if(progressBar.getValue()==progressBar.getMaximum()){
             (( WebProgressBar) progressBar).setProgressTopColor(cyanProgress);
             (( WebProgressBar) progressBar).setProgressBottomColor(cyanProgress);
-            (( WebProgressBar) progressBar).setForeground(Color.white);
+            //(( WebProgressBar) progressBar).setForeground(Color.black);
             //System.out.println(progressBar.getForeground());
         }
         else{
