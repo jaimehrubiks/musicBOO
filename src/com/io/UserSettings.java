@@ -49,6 +49,7 @@ public class UserSettings {
         defaultProps.setProperty("PostVideoConvert" , "no"          ); //--recode-video FORMAT //0 is no
         defaultProps.setProperty("ONLYVIDEOS"       , "false"       ); //-x
         defaultProps.setProperty("ParallelDownloads", "5"           ); 
+        defaultProps.setProperty("disableSSL"       , "true"       ); 
         if(!(configProps==null))
             defaultProps.setProperty("TermsAccepted"    , configProps.getProperty("TermsAccepted", "false")       ); 
         defaultProps.setProperty("DefaultFilename"  , "%(title)s.%(ext)s");
