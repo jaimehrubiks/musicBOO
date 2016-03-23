@@ -45,9 +45,6 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1000, 800]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -884,7 +881,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confVideoOnly" linkSize="7" min="-2" pref="80" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                                                  <Component id="jLabel19" pref="450" max="32767" attributes="0"/>
+                                                  <Component id="jLabel19" pref="445" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confAudioQuality" linkSize="7" min="-2" pref="78" max="-2" attributes="0"/>
@@ -904,10 +901,10 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confOriginalVideoFormat" min="-2" pref="152" max="-2" attributes="0"/>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" pref="457" max="32767" attributes="0"/>
+                                                  <Component id="jLabel5" pref="452" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="142" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -1185,7 +1182,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel10">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Only videos (no music)"/>
+                    <Property name="text" type="java.lang.String" value="Download video"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="confVideoOnly">
@@ -1250,7 +1247,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel19">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Use YES to download VIDEOS from youtube. NO for music."/>
+                    <Property name="text" type="java.lang.String" value="Use YES to download VIDEOS from youtube. NO for only music."/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel20">
@@ -1377,10 +1374,8 @@
                       <EmptySpace pref="174" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jButton4" pref="182" max="32767" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="autoSel" max="32767" attributes="0"/>
-                              <Component id="sslSel" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="autoSel" max="32767" attributes="0"/>
+                          <Component id="sslSel" max="32767" attributes="0"/>
                           <Component id="jButton5" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>

@@ -267,7 +267,6 @@ public class BooGui extends javax.swing.JFrame {
         rightClickMenu.add(rightClickPlay);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 800));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 onWindowsClose(evt);
@@ -758,7 +757,7 @@ public class BooGui extends javax.swing.JFrame {
 
         jLabel9.setText("Post video convert");
 
-        jLabel10.setText("Only videos (no music)");
+        jLabel10.setText("Download video");
 
         confVideoOnly.setText("No");
         confVideoOnly.addActionListener(new java.awt.event.ActionListener() {
@@ -802,7 +801,7 @@ public class BooGui extends javax.swing.JFrame {
 
         confParallelValue.setText("5");
 
-        jLabel19.setText("Use YES to download VIDEOS from youtube. NO for music.");
+        jLabel19.setText("Use YES to download VIDEOS from youtube. NO for only music.");
 
         jLabel20.setText("**Remember to save changes**");
 
@@ -836,7 +835,7 @@ public class BooGui extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confVideoOnly, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(97, 97, 97)
-                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE))
+                                        .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confAudioQuality, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(88, 88, 88)
@@ -852,8 +851,8 @@ public class BooGui extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(confOriginalVideoFormat, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)))
-                                .addGap(0, 142, Short.MAX_VALUE))))
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)))
+                                .addGap(0, 136, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1070,9 +1069,8 @@ public class BooGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 174, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(autoSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(autoSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
