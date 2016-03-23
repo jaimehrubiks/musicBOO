@@ -62,7 +62,7 @@ import javax.swing.table.TableColumn;
 public class BooGui extends javax.swing.JFrame {
 
     
-    private final String appTitle = "musicBOO v1.6.1 // youtube music and video downloader";
+    private final String appTitle = "musicBOO v1.7 // youtube music and video downloader";
     
     /* Managers */
     private BooManager boo;
@@ -225,6 +225,8 @@ public class BooGui extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        sslSel = new javax.swing.JCheckBox();
         logButton = new javax.swing.JToggleButton();
         topPanel = new javax.swing.JPanel();
         newlogo = new javax.swing.JLabel();
@@ -961,7 +963,7 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1.setFont(new java.awt.Font("Courier New", 0, 13)); // NOI18N
         jTextArea1.setForeground(new java.awt.Color(0, 255, 0));
         jTextArea1.setRows(5);
-        jTextArea1.setText("\n © MUSICBOO v1.6.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n\n App description:\n -\"MUSICBOO\" can be considered as a Windows, OSX and Linux GUI for youtube api v3, \n youtube-dl and FFmpeg, and allows the user to search, download, and convert online \n videos easily. It also provides mpv as a full media player and streaming.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. \n This program may be used to download copyright-free content, personally uploaded data, \n or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information \n and materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.\n ");
+        jTextArea1.setText("\n © MUSICBOO v1.7.0.0 FINAL\n \n Developed and designed by Jaime Hidalgo García - @jaimehrubiks\n \n Author:\n -Jaime Hidalgo garcía\n \n Special Thanks to:\n -\"youtube-dl\" \t\thttps://rg3.github.io/youtube-dl/\n -\"FFmpeg\" \t        https://www.ffmpeg.org/\n -\"netbeans IDE\" \thttps://netbeans.org/\n -\"youtube.com\"\t\thttps://www.youtube.com/\n -\"mpv\"\t\t\thttp://mpv.io/\n\n App description:\n -\"MUSICBOO\" can be considered as a Windows, OSX and Linux GUI for youtube api v3, \n youtube-dl and FFmpeg, and allows the user to search, download, and convert online \n videos easily. It also provides mpv as a full media player and streaming.\n \n **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**\n This program should not be used to download content you are not allowed to. \n This program may be used to download copyright-free content, personally uploaded data, \n or material you are given explicit permission.\n \n APPLICATION DISCLAIMER\n \n This app is provided “as is” without any representations or warranties, express or implied. \n \"© MUSICBOO\" makes no representations or warranties in relation to this app or the information \n and materials provided on it. The content displayed belong to their respective authors.\n \n Your use of this software constitutes acceptance of the Terms mentioned before.\n ");
         jTextArea1.setFocusable(false);
         jTextArea1.setMinimumSize(new java.awt.Dimension(0, 0));
         jTextArea1.setPreferredSize(new java.awt.Dimension(900, 50));
@@ -1029,7 +1031,17 @@ public class BooGui extends javax.swing.JFrame {
         });
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("You can contact me via email or forums. See \"About\" page for more details.");
+        jLabel26.setText("Disable SSL check (If you experiment SSL cert issues)");
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setText("You can contact me via email or forums. See \"About\" page for more details.");
+
+        sslSel.setText("Disable SSL");
+        sslSel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sslSelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1044,14 +1056,20 @@ public class BooGui extends javax.swing.JFrame {
                             .addComponent(jLabel12))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel24)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel24)
+                            .addComponent(jLabel26))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(jLabel27)
+                    .addContainerGap(493, Short.MAX_VALUE)))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton4, jButton5});
@@ -1073,12 +1091,19 @@ public class BooGui extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(388, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .addComponent(sslSel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(251, 251, 251))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                    .addContainerGap(370, Short.MAX_VALUE)
+                    .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(21, 21, 21)))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton4, jButton5, jLabel24, jLabel26});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton4, jButton5, jLabel24});
 
         helpTab.addTab("Help", jPanel2);
 
@@ -1508,6 +1533,12 @@ public class BooGui extends javax.swing.JFrame {
 //            }
 //        });
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void sslSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sslSelActionPerformed
+        // TODO add your handling code here:
+        UserSettings.configProps.setProperty("disableSSL", String.valueOf(sslSel.isSelected()));
+        UserSettings.saveProperties();
+    }//GEN-LAST:event_sslSelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1998,6 +2029,8 @@ public class BooGui extends javax.swing.JFrame {
         confParallelValue.setText( UserSettings.configProps.getProperty("ParallelDownloads") );
         confParallelSlider.setValue( Integer.parseInt(UserSettings.configProps.getProperty("ParallelDownloads")));
         
+        sslSel.setSelected( Boolean.parseBoolean(UserSettings.configProps.getProperty("disableSSL")) );
+        
         if( !Boolean.parseBoolean(UserSettings.configProps.getProperty("TermsAccepted","false")) )
             new Disclaimer().setVisible(true);
         if (Boolean.parseBoolean(UserSettings.configProps.getProperty("KeepVideo")) )
@@ -2070,6 +2103,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2128,6 +2162,7 @@ public class BooGui extends javax.swing.JFrame {
     private javax.swing.JButton selectMediaButton;
     private javax.swing.JScrollPane settingsTab;
     private javax.swing.JTextArea siteslist;
+    private javax.swing.JCheckBox sslSel;
     private javax.swing.JButton startPlayList;
     private javax.swing.JPanel topPanel;
     private javax.swing.JButton urlParseButton;

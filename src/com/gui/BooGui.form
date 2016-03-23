@@ -1326,7 +1326,7 @@
                       <Color blue="0" green="ff" red="0" type="rgb"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.6.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa;&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows, OSX and Linux GUI for youtube api v3, &#xa; youtube-dl and FFmpeg, and allows the user to search, download, and convert online &#xa; videos easily. It also provides mpv as a full media player and streaming.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. &#xa; This program may be used to download copyright-free content, personally uploaded data, &#xa; or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information &#xa; and materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before.&#xa; "/>
+                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.7.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa;&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows, OSX and Linux GUI for youtube api v3, &#xa; youtube-dl and FFmpeg, and allows the user to search, download, and convert online &#xa; videos easily. It also provides mpv as a full media player and streaming.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. &#xa; This program may be used to download copyright-free content, personally uploaded data, &#xa; or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information &#xa; and materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before.&#xa; "/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 0]"/>
@@ -1376,17 +1376,26 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="jButton4" linkSize="17" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel24" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel24" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace pref="156" max="32767" attributes="0"/>
-                              <Component id="jButton5" linkSize="17" min="-2" pref="200" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="sslSel" max="32767" attributes="0"/>
+                                  <Component id="jButton5" linkSize="17" pref="200" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="493" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1412,9 +1421,19 @@
                               <Component id="jLabel24" linkSize="16" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jLabel26" linkSize="16" min="-2" pref="29" max="-2" attributes="0"/>
-                      <EmptySpace pref="388" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jLabel26" alignment="3" pref="51" max="32767" attributes="0"/>
+                          <Component id="sslSel" alignment="3" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="251" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace pref="370" max="32767" attributes="0"/>
+                          <Component id="jLabel27" min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1465,8 +1484,24 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
+                <Property name="text" type="java.lang.String" value="Disable SSL check (If you experiment SSL cert issues)"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="jLabel27">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="You can contact me via email or forums. See &quot;About&quot; page for more details."/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JCheckBox" name="sslSel">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Disable SSL"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sslSelActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
