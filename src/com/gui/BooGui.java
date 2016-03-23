@@ -1627,6 +1627,7 @@ public class BooGui extends javax.swing.JFrame {
         jTextArea1.setCaretPosition(0);
         siteslist.setCaretPosition(0);
         //setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
         
         /* Configs table renderers and properties */
         tableConfig();
