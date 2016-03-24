@@ -53,6 +53,10 @@ public class PlayListDownloader implements Runnable {
         else if(platformtools.isUnix())
             command.add( new java.io.File("").getAbsolutePath()+"/linuxtools/youtube-dl");
         
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("disableSSL"))) {
+            command.add("--no-check-certificate");
+        }
+        
         command.add("-i");
         
         if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS")) )  {
