@@ -78,6 +78,10 @@ public class VideoDownloader implements Runnable {
         else if(platformtools.isUnix())
             command.add( new java.io.File("").getAbsolutePath()+"/linuxtools/youtube-dl");
         
+        if (Boolean.parseBoolean(UserSettings.configProps.getProperty("disableSSL"))) {
+            command.add("--no-check-certificate");
+        }
+        
         if (Boolean.parseBoolean(UserSettings.configProps.getProperty("ONLYVIDEOS"))  && audio_video_only == 0 
                                                                                         || audio_video_only == 2) {
 
