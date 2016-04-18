@@ -25,9 +25,9 @@
           </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="rightClickCopy">
-          <Properties>
-            <Property name="label" type="java.lang.String" value="Copy URL"/>
-          </Properties>
+          <AccessibilityProperties>
+            <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="" postCode="rightClickCopy.setText(&quot;Copy URL&quot;);"/>
+          </AccessibilityProperties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rightClickCopyActionPerformed"/>
           </Events>

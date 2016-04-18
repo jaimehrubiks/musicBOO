@@ -50,6 +50,7 @@ public class UserSettings {
         defaultProps.setProperty("ONLYVIDEOS"       , "false"       ); //-x
         defaultProps.setProperty("ParallelDownloads", "5"           ); 
         defaultProps.setProperty("disableSSL"       , "true"       ); 
+        defaultProps.setProperty("autoupdate"       , "true"       ); 
         if(!(configProps==null))
             defaultProps.setProperty("TermsAccepted"    , configProps.getProperty("TermsAccepted", "false")       ); 
         defaultProps.setProperty("DefaultFilename"  , "%(title)s.%(ext)s");

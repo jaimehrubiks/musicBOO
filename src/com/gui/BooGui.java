@@ -34,7 +34,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.Executors;
@@ -42,14 +41,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -250,13 +247,13 @@ public class BooGui extends javax.swing.JFrame {
         });
         rightClickMenu.add(rightClickVideo);
 
-        rightClickCopy.setLabel("Copy URL");
         rightClickCopy.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rightClickCopyActionPerformed(evt);
             }
         });
         rightClickMenu.add(rightClickCopy);
+        rightClickCopy.getAccessibleContext().setAccessibleName("");
 
         rightClickPlay.setText("Play Video [Multi]");
         rightClickPlay.addActionListener(new java.awt.event.ActionListener() {
@@ -1552,20 +1549,26 @@ public class BooGui extends javax.swing.JFrame {
 
     private void autoSelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_autoSelActionPerformed
         // TODO add your handling code here:
+        UserSettings.configProps.setProperty("autoupdate", String.valueOf(autoSel.isSelected()));
+        UserSettings.saveProperties();
     }//GEN-LAST:event_autoSelActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
 
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
             
-            //UIManager.setLookAndFeel ( "com.alee.laf.WebLookAndFeel" );
+   //                try { 
+//            UIManager.setLookAndFeel ( "com.alee.laf.WebLookAndFeel" );
+//        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+//            Logger.getLogger(BooGui.class.getName()).log(Level.SEVERE, null, ex);
+//        }
             
 //            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //                if ("Nimbus".equals(info.getName())) {
@@ -1578,11 +1581,23 @@ public class BooGui extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                //WebLookAndFeel.install ();
-                WebLookAndFeel.install ();
-                //CoreManagers.initialize ();
-                WebLookAndFeel.initializeManagers ();
+                
+               // WebLookAndFeel.install ();
+               // WebLookAndFeel.initializeManagers ();
+                
+                
+                try {
+                    
+                  UIManager.setLookAndFeel ( "com.alee.laf.WebLookAndFeel" );
+                  //UIManager.setLookAndFeel ( WebLookAndFeel.class.getCanonicalName () );
+                  //UIManager.setLookAndFeel ( new com.alee.laf.WebLookAndFeel () );
+
+                } catch (UnsupportedLookAndFeelException | ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                    Logger.getLogger(BooGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
                 new BooGui().setVisible(true);
             }
         });
@@ -1634,7 +1649,7 @@ public class BooGui extends javax.swing.JFrame {
         loadSettingsToForm();
         
         /* Auto Update */
-        if( autoSel.isEnabled() ){
+        if( autoSel.isSelected() ){
             Thread t = new Thread(new YoutubeUpdater(this));
             t.start();
         }
