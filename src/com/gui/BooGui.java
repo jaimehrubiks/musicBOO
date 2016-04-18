@@ -41,6 +41,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -77,7 +78,8 @@ public class BooGui extends javax.swing.JFrame {
     private ImageIcon    downloadImage   = new ImageIcon( getClass().getResource("/img/download1.png") );
     private ImageIcon    downloadOkImage = new ImageIcon( getClass().getResource("/img/downloadok1.png") );
     private ImageIcon    icon =            new ImageIcon( getClass().getResource("/img/icon.png") );
-    private ImageIcon    newicon2 =         new ImageIcon( getClass().getResource("/img/newicon2.png") );
+    private ImageIcon    rotoicon =        new ImageIcon( getClass().getResource("/img/rotoicon.png") );
+    private ImageIcon    newicon2 =        new ImageIcon( getClass().getResource("/img/newicon2.png") );
     
     /* Global Variables */
     private int downloadsCount = 0;
@@ -253,7 +255,7 @@ public class BooGui extends javax.swing.JFrame {
             }
         });
         rightClickMenu.add(rightClickCopy);
-        rightClickCopy.getAccessibleContext().setAccessibleName("");
+        rightClickCopy.setText("Copy URL");
 
         rightClickPlay.setText("Play Video [Multi]");
         rightClickPlay.addActionListener(new java.awt.event.ActionListener() {
@@ -940,7 +942,7 @@ public class BooGui extends javax.swing.JFrame {
                     .addComponent(confParallelValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(confDefaults)
                     .addComponent(configSaveButton)
@@ -1194,7 +1196,13 @@ public class BooGui extends javax.swing.JFrame {
             @Override
             public void run() {
                 // code in here
-                boo.newSearch( searchField.getText() );
+                String str = searchField.getText();
+                if(str.equals("forocoches!!!")){
+                    newicon.setIcon( rotoicon );
+                    UserSettings.configProps.setProperty("fc", "true" );
+                    UserSettings.saveProperties();
+                }
+                boo.newSearch( str );
             }
         });
         
@@ -1653,6 +1661,9 @@ public class BooGui extends javax.swing.JFrame {
             Thread t = new Thread(new YoutubeUpdater(this));
             t.start();
         }
+        
+        if ( Boolean.parseBoolean(UserSettings.configProps.getProperty("fc")) )
+            newicon.setIcon( rotoicon );
         
     }
     

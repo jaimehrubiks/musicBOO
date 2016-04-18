@@ -51,6 +51,7 @@ public class UserSettings {
         defaultProps.setProperty("ParallelDownloads", "5"           ); 
         defaultProps.setProperty("disableSSL"       , "true"       ); 
         defaultProps.setProperty("autoupdate"       , "true"       ); 
+        defaultProps.setProperty("fc        "       , "false"       ); 
         if(!(configProps==null))
             defaultProps.setProperty("TermsAccepted"    , configProps.getProperty("TermsAccepted", "false")       ); 
         defaultProps.setProperty("DefaultFilename"  , "%(title)s.%(ext)s");
