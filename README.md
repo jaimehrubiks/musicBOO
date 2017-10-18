@@ -52,3 +52,6 @@ You can download musicBOO in https://github.com/jaimehrubiks/musicBOO/releases
     [Notes] 		    Added mpv and v1.5 to about pane
     [Extra]			    Secret glitch, I'm sure you'll find it in 5, 10, 15 and 20.
 
+# License
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
