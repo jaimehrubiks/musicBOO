@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class YoutubeVideo implements Serializable {
     
     private String videoId;
+    private String videoUrl;
     private String videoName;
     private String videoDur;
     private String imageUrl;
@@ -71,7 +72,14 @@ public class YoutubeVideo implements Serializable {
     public String getHits(){
         return hits;
     }
+
+    public void setVideoUrl(String url){
+        this.videoUrl = url;
+    }
     
+    public String getVideoUrl(){
+        return this.videoUrl;
+    }
     
     
 }

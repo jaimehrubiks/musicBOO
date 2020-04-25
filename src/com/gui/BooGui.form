@@ -200,7 +200,7 @@
     <Container class="javax.swing.JTabbedPane" name="helpTab">
       <Properties>
         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Cursor Por defecto"/>
+          <Color id="Default Cursor"/>
         </Property>
         <Property name="doubleBuffered" type="boolean" value="true"/>
         <Property name="focusable" type="boolean" value="false"/>
@@ -219,8 +219,8 @@
         <Container class="javax.swing.JPanel" name="searchTab">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Search">
-                <Property name="tabTitle" type="java.lang.String" value="Search"/>
+              <JTabbedPaneConstraints tabName="Youtube Search">
+                <Property name="tabTitle" type="java.lang.String" value="Youtube Search"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -288,7 +288,7 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="model" type="code"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="50"/>
+                    <Property name="rowHeight" type="int" value="70"/>
                     <Property name="selectionModel" type="javax.swing.ListSelectionModel" editor="org.netbeans.modules.form.editors2.JTableSelectionModelEditor">
                       <JTableSelectionModel selectionMode="0"/>
                     </Property>
@@ -306,8 +306,8 @@
         <Container class="javax.swing.JPanel" name="urlTab">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="URL Parser">
-                <Property name="tabTitle" type="java.lang.String" value="URL Parser"/>
+              <JTabbedPaneConstraints tabName="Youtube URL Parser">
+                <Property name="tabTitle" type="java.lang.String" value="Youtube URL Parser"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -394,8 +394,8 @@
         <Container class="javax.swing.JPanel" name="playlistTab">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Playlists...">
-                <Property name="tabTitle" type="java.lang.String" value="Playlists..."/>
+              <JTabbedPaneConstraints tabName="All-Internet Downloader">
+                <Property name="tabTitle" type="java.lang.String" value="All-Internet Downloader"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -882,7 +882,7 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confVideoOnly" linkSize="7" min="-2" pref="80" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
-                                                  <Component id="jLabel19" pref="445" max="32767" attributes="0"/>
+                                                  <Component id="jLabel19" pref="467" max="32767" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confAudioQuality" linkSize="7" min="-2" pref="78" max="-2" attributes="0"/>
@@ -902,10 +902,10 @@
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Component id="confOriginalVideoFormat" min="-2" pref="152" max="-2" attributes="0"/>
                                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" pref="452" max="32767" attributes="0"/>
+                                                  <Component id="jLabel5" pref="474" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace min="0" pref="136" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="158" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -936,6 +936,17 @@
                               <Component id="jSeparator8" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="confDownloadSubs" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                          <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="confIncludeAllAutoSubs" min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1010,7 +1021,14 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jSeparator8" min="-2" pref="15" max="-2" attributes="0"/>
-                          <EmptySpace pref="33" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="confDownloadSubs" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                              <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="confIncludeAllAutoSubs" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="confDefaults" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="configSaveButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1034,7 +1052,7 @@
                 <Component class="javax.swing.JTextField" name="confDownFolder">
                   <Properties>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor de Texto"/>
+                      <Color id="Default Cursor"/>
                     </Property>
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
@@ -1175,6 +1193,9 @@
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confPostVideoConvertActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>
@@ -1256,6 +1277,32 @@
                     <Property name="text" type="java.lang.String" value="**Remember to save changes**"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="jLabel29">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Download All Subtitles as files"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="confDownloadSubs">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="No"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confDownloadSubsActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel30">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Include ALL Autogenerated Subtitles (&gt;100 files)"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="confIncludeAllAutoSubs">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="No"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confIncludeAllAutoSubsActionPerformed"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -1324,7 +1371,7 @@
                       <Color blue="0" green="ff" red="0" type="rgb"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
-                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.7.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa;&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows, OSX and Linux GUI for youtube api v3, &#xa; youtube-dl and FFmpeg, and allows the user to search, download, and convert online &#xa; videos easily. It also provides mpv as a full media player and streaming.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. &#xa; This program may be used to download copyright-free content, personally uploaded data, &#xa; or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information &#xa; and materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before.&#xa; "/>
+                    <Property name="text" type="java.lang.String" value="&#xa; &#xa9; MUSICBOO v1.8.0.0 FINAL&#xa; &#xa; Developed and designed by Jaime Hidalgo Garc&#xed;a - @jaimehrubiks&#xa; &#xa; Author:&#xa; -Jaime Hidalgo garc&#xed;a&#xa; &#xa; Special Thanks to:&#xa; -&quot;youtube-dl&quot; &#x9;&#x9;https://rg3.github.io/youtube-dl/&#xa; -&quot;FFmpeg&quot; &#x9;        https://www.ffmpeg.org/&#xa; -&quot;netbeans IDE&quot; &#x9;https://netbeans.org/&#xa; -&quot;youtube.com&quot;&#x9;&#x9;https://www.youtube.com/&#xa; -&quot;mpv&quot;&#x9;&#x9;&#x9;http://mpv.io/&#xa;&#xa; App description:&#xa; -&quot;MUSICBOO&quot; can be considered as a Windows, OSX and Linux GUI for youtube api v3, &#xa; youtube-dl and FFmpeg, and allows the user to search, download, and convert online &#xa; videos easily. It also provides mpv as a full media player and streaming.&#xa; &#xa; **DO NOT USE THIS PROGRAM TO DOWNLOAD COPYRIGHT PROTECTED MATERIAL WITHOUT OWNER PERMISSION**&#xa; This program should not be used to download content you are not allowed to. &#xa; This program may be used to download copyright-free content, personally uploaded data, &#xa; or material you are given explicit permission.&#xa; &#xa; APPLICATION DISCLAIMER&#xa; &#xa; This app is provided &#x201c;as is&#x201d; without any representations or warranties, express or implied. &#xa; &quot;&#xa9; MUSICBOO&quot; makes no representations or warranties in relation to this app or the information &#xa; and materials provided on it. The content displayed belong to their respective authors.&#xa; &#xa; Your use of this software constitutes acceptance of the Terms mentioned before.&#xa; "/>
                     <Property name="focusable" type="boolean" value="false"/>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 0]"/>
